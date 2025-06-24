@@ -1,0 +1,250 @@
+/* General Body and Background Styling */
+body, html {
+    height: 100%;
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+    background-color: rgb(250, 235, 215); 
+    color: #800020;
+    margin: 0;
+}
+
+/* Logo */
+.logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 350px;
+    height: auto;
+}
+
+
+
+/* Navbar Styling */
+.navbar {
+    background-color: #800020; 
+    padding: 10px 0;
+    display: flex;
+    justify-content: center; 
+    width: 100%;
+}
+
+.navbar ul {
+    display: flex;
+    gap: 30px;
+    padding: 0;
+}
+
+.navbar ul li {
+    list-style-type: none;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: rgb(250, 235, 215); 
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.navbar ul li a:hover {
+    background-color: rgb(255, 223, 200); 
+    color: #800020;
+}
+
+/* Headings */
+h1, h2 {
+    font-weight: bold;
+    text-transform: uppercase; 
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+/* Paragraphs */
+p {
+    font-size: 20px;
+    line-height: 1.5;
+    margin: 0 0 20px;
+    text-align: center;
+}
+
+/* Buttons */
+button {
+    background-color: #800020;
+    color: rgb(250, 235, 215);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: rgb(255, 223, 200);
+    color: #800020;
+}
+
+/* Centered Form Containers */
+.form-container,
+.login-form,
+.signup-form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+    margin: 40px auto; /* Center horizontally */
+    display: grid;
+    place-items: center;
+}
+
+/* Form Labels and Input Fields */
+.form-container label,
+.login-form label,
+.signup-form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.form-container input[type="text"],
+.form-container input[type="number"],
+.login-form input,
+.signup-form input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Form Buttons */
+.form-container button,
+.login-form button,
+.signup-form button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #800020;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover,
+.login-form button:hover,
+.signup-form button:hover {
+    background-color: #a0002e;
+}
+
+/* Sub title within Forms */
+.form-container .sub-title {
+    margin-top: 20px;
+    font-size: 17.5px;
+    color: #800020;
+}
+
+/*  Styling for dropdown boxes */
+select {
+    background-color: #FAEBD7;
+    color: #800020; 
+    border: 2px solid #800020;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Styling for dropdown boxes */
+select option {
+    background-color: #FAEBD7;
+    color: #800020;
+}
+
+/* Focus and hover effects for dropdown */
+select:focus, select:hover {
+    border-color: #A03040; 
+    box-shadow: 0 0 5px rgba(128, 0, 32, 0.5); 
+}
+
+/* Disabled state for dropdowns */
+select:disabled {
+    background-color: #A08090;
+    color: #FAEBD7;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Error splash screen */
+.alert {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+
+}
+/* Delete button*/
+.delete-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; 
+}
+
+/* Delete button */
+.delete-button {
+    background-color: #ff0000; 
+    color: #ffffff; 
+    padding: 10px 20px;
+    font-size: 17.5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+    border-radius: 5px;
+}
+
+.delete-button:hover {
+    background-color: #f57588; 
+}
+/* Admin table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table, th, td {
+    border: 1px solid #000000; 
+    
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: #800020;
+    color: rgb(250, 235, 215);
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    font-size: 10px;
+    margin-top: auto;
+}
