@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<div class="navbar">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/information">Home</a></li>
+
+        {% if session.get('user_id') %}
+            <li><a href="/account">Account</a></li>
+            <li><a href="/logout">Logout</a></li>
+        {% else %}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</div>
+
+
+    <div class="signup-form">
+        <h2>Create Account</h2>
+        {% if error %}
+            <div class="alert">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <div class="sub-title">
+            Already have an account? <a href="/login">Log in here</a>
+        </div>
+    </div>
+</body>
+</html>

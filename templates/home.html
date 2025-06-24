@@ -5,14 +5,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    
     <div class="navbar">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/information">Information</a></li>
+            <li><a href="/information">Home</a></li>
+    
+            {% if session.get('user_id') %}
+                <li><a href="/account">Account</a></li>
+                <li><a href="/logout">Logout</a></li>
+            {% else %}
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+            {% endif %}
         </ul>
     </div>
+    
+    
 
     <h1>Welcome to the Home Page</h1>
     <p>Test</p>
 </body>
 </html>
+
