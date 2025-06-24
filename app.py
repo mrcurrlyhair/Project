@@ -1,34 +1,51 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 import hashlib
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
 
-def hash_password(password):
-    return hashlib.sha256(password.encode()).hexdigest()
 
-def get_db_connection():
+# Hashing function 
+def hashing_pass(text):
+    text = text.encode('utf-8')
+    hash = hashlib.sha256()
+    hash.update(text)
+    return hash.hexdigest()
+
+
+# SQLite user connection
+def userdb_connection():
     conn = sqlite3.connect('users.db')
     conn.row_factory = sqlite3.Row
     return conn
 
+# SQLite health connection
+def healthdb_connection():
+    conn = sqlite3.connect('health.db')
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+# Home/landing page
 @app.route('/')
 def home():
     return render_template('home.html')
 
+# Information page
 @app.route('/information')
 def information():
     return render_template('information.html')
 
+# Login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
         username = request.form['username']
-        password = hash_password(request.form['password'])
+        password = hashing_pass(request.form['password'])
 
-        conn = get_db_connection()
+        conn = userdb_connection()
         user = conn.execute('SELECT * FROM users WHERE username = ? AND password = ?', (username, password)).fetchone()
         conn.close()
 
@@ -41,24 +58,38 @@ def login():
 
     return render_template('login.html', error=error)
 
+# Sign up page
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
     if request.method == 'POST':
         username = request.form['username']
-        password = hash_password(request.form['password'])
+        password = hashing_pass(request.form['password'])
 
         try:
-            conn = get_db_connection()
-            conn.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
-            conn.commit()
-            conn.close()
+            # Insert into users.db
+            conn_user = userdb_connection()
+            cursor = conn_user.cursor()
+            cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+            conn_user.commit()
+
+            # Get the new user's ID
+            user_id = cursor.lastrowid
+            conn_user.close()
+
+            # Insert into health.db with that user_id
+            conn_health = healthdb_connection()
+            conn_health.execute('INSERT INTO health (user_id) VALUES (?)', (user_id,))
+            conn_health.commit()
+            conn_health.close()
+
             return redirect(url_for('login'))
         except sqlite3.IntegrityError:
             error = 'Username already taken'
 
     return render_template('signup.html', error=error)
 
+# Account view page
 @app.route('/account')
 def account():
     if 'user_id' not in session:
@@ -70,15 +101,29 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
+# Delete account for patient 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
     if 'user_id' in session:
-        conn = get_db_connection()
-        conn.execute('DELETE FROM users WHERE id = ?', (session['user_id'],))
-        conn.commit()
-        conn.close()
+        user_id = session['user_id']
+
+        # Delete from health.db
+        conn_health = healthdb_connection()
+        conn_health.execute('DELETE FROM health WHERE user_id = ?', (user_id,))
+        conn_health.commit()
+        conn_health.close()
+
+        # Delete from users.db
+        conn_user = userdb_connection()
+        conn_user.execute('DELETE FROM users WHERE id = ?', (user_id,))
+        conn_user.commit()
+        conn_user.close()
+
         session.clear()
+        flash('Your account was deleted successfully.')
+
     return redirect(url_for('home'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -19,8 +19,20 @@
                 <li><a href="/signup">Sign Up</a></li>
             {% endif %}
         </ul>
+
     </div>
     
+            <!-- for error splash screen-->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="alert">
+            {% for message in messages %}
+              <p>{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% endwith %}
+  
     
 
     <h1>Welcome to the Home Page</h1>
