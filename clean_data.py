@@ -52,13 +52,13 @@ merged["smoking_status"] = merged["Tobacco smoking status"].map(smoking).fillna(
 
 # Different terms for the same diseases
 diseases_terms = {
-    "heart_disease": ["myocardial infarction", "coronary artery disease"],
-    "stroke": ["stroke", "ischemic stroke"],
+    "heart_disease": ["myocardial infarction", "coronary artery disease", "chronic congestive heart failure"],
+    "stroke": ["stroke", "ischemic stroke", "cerebrovascular accident"],
     "hypertension": ["hypertension"],
-    "copd": ["chronic obstructive pulmonary disease"],
+    "copd": ["chronic obstructive pulmonary disease", "chronic obstructive bronchitis"],
     "asthma": ["asthma"],
     "lung_cancer": ["lung cancer"],
-    "diabetes": ["diabetes", "type 2"]
+    "diabetes": ["diabetes", "type 2", "diabetes mellitus type 2", "disorder of kidney due to diabetes mellitus"]
 }
 
 # Add empty columns for each disease
