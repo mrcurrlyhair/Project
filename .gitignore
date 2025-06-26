@@ -3,3 +3,5 @@ CSVs/conditions.csv
 CSVs/observations.csv
 CSVs/patients.csv
 CSVs/cleaned_data.csv
+health.db
+users.db
