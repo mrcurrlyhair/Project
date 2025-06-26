@@ -30,7 +30,23 @@ patients_clean["AGE"] = (pd.Timestamp("today") - patients_clean["BIRTHDATE"]).dt
 # Merge patient data with their observations data
 merged = pd.merge(patients_clean, observations, on="PATIENT", how="left")
 
-# different terms for the same diseases
+# Calculate BMI using height in cm and weight in kg
+merged["Body Height"] = pd.to_numeric(merged["Body Height"], errors="coerce")
+merged["Body Weight"] = pd.to_numeric(merged["Body Weight"], errors="coerce")
+merged["BMI"] = merged["Body Weight"] / (merged["Body Height"] / 100) ** 2
+
+
+# Map tobacco smoking status into simpler categories
+smoking = {
+    "Smokes tobacco daily (finding)": "Current",
+    "Ex-smoker (finding)": "Former",
+    "Never smoked tobacco (finding)": "Never"
+}
+
+merged["smoking_status"] = merged["Tobacco smoking status"].map(smoking).fillna("Unknown")
+
+
+# Different terms for the same diseases
 diseases_terms = {
     "heart_disease": ["myocardial infarction", "coronary artery disease"],
     "stroke": ["stroke", "ischemic stroke"],
