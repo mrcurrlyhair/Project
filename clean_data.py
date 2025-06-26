@@ -48,6 +48,7 @@ smoking = {
 }
 
 merged["smoking_status"] = merged["Tobacco smoking status"].map(smoking).fillna("Unknown")
+merged.drop(columns=["Tobacco smoking status"], inplace=True)
 
 
 # Different terms for the same diseases
