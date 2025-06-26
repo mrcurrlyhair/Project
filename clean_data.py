@@ -27,13 +27,17 @@ patients_clean.rename(columns={"Id": "PATIENT"}, inplace=True)
 patients_clean["BIRTHDATE"] = pd.to_datetime(patients_clean["BIRTHDATE"])
 patients_clean["AGE"] = (pd.Timestamp("today") - patients_clean["BIRTHDATE"]).dt.days // 365
 
+# Unknown zips use preious zips (postcodes)
+patients_clean["ZIP"] = patients_clean["ZIP"].replace(0, pd.NA)
+patients_clean["ZIP"] = patients_clean["ZIP"].fillna(method="ffill")
+
 # Merge patient data with their observations data
 merged = pd.merge(patients_clean, observations, on="PATIENT", how="left")
 
 # Calculate BMI using height in cm and weight in kg
 merged["Body Height"] = pd.to_numeric(merged["Body Height"], errors="coerce")
 merged["Body Weight"] = pd.to_numeric(merged["Body Weight"], errors="coerce")
-merged["BMI"] = merged["Body Weight"] / (merged["Body Height"] / 100) ** 2
+merged["BMI"] = round(merged["Body Weight"] / (merged["Body Height"] / 100) ** 2, 1)
 
 
 # Map tobacco smoking status into simpler categories
