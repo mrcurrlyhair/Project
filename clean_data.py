@@ -123,6 +123,43 @@ merged["physical_activity"] = merged.apply(physical_activity, axis=1)
 merged["diet_quality"] = merged.apply(diet_quality, axis=1)
 merged["sleep_hours"] = merged.apply(sleep_hours, axis=1)
 
+# Load uszips csv 
+zipcode = pd.read_csv("CSVs/uszips.csv", dtype={"zip": str}, low_memory=False)
+
+# Load only masachusetts zips
+zipcounty = zipcode[zipcode["state_id"] == "MA"][["zip", "county_name"]]
+
+# Define radon level 5 = high / 3 = moderate / 1 = low
+radon = {
+    "Worcester": 5,
+    "Middlesex": 5,
+    "Essex": 5,
+    "Norfolk": 3,
+    "Plymouth": 3,
+    "Barnstable": 3,
+    "Bristol": 3,
+    "Hampden": 3,
+    "Hampshire": 3,
+    "Franklin": 3,
+    "Berkshire": 3,
+    "Suffolk": 1
+}
+
+# Assign radon levels based on county
+zipcounty["radon_level"] = zipcounty["county_name"].map(radon)
+
+# Missing zip code
+zipcounty.loc[len(zipcounty)] = ["01866", "Middlesex", 5]
+
+# Prepare zip codes, need to be 5 digits long 
+merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
+
+# Merge  
+merged = merged.merge(zipcounty, left_on="ZIP", right_on="zip", how="left")
+
+# delete extra zip column   
+#merged.drop(columns=["zip"], inplace=True)
+
 # Save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
 print("Cleaned dataset saved ")
