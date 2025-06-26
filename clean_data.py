@@ -1,4 +1,7 @@
 import pandas as pd
+import numpy as np
+
+# Seed 28, 10000 patients, Massachusetts 
 
 # Load the CSV files
 observations = pd.read_csv("CSVs/observations.csv")
@@ -75,6 +78,50 @@ for i, row in conditions.iterrows():
             if word in desc:
                 merged.loc[merged["PATIENT"] == pid, label] = 1
                 break
+
+
+# Alcohol use - None, Light, Moderate, Heavy
+def alcohol_use(row):
+    if row["AGE"] >= 65:
+        probs = [0.40, 0.45, 0.11, 0.04]
+    elif row["AGE"] <= 34:
+        probs = [0.30, 0.50, 0.16, 0.04]
+    else:
+        probs = [0.34, 0.46, 0.15, 0.05]
+    return np.random.choice(["None", "Light", "Moderate", "Heavy"], p=probs)
+
+# Physical activity 
+def physical_activity(row):
+    if row["AGE"] >= 65:
+        return np.random.choice(["Sedentary", "Moderate", "Active"], p=[0.25, 0.60, 0.15])
+    else:
+        return np.random.choice(["Sedentary", "Moderate", "Active"], p=[0.25, 0.45, 0.30])
+
+# Diet quality 
+def diet_quality(row):
+    if row["diabetes"] == 1:
+        return np.random.choice(["Poor", "Average", "Healthy"], p=[0.50, 0.35, 0.15])
+    elif row["BMI"] > 30:
+        return np.random.choice(["Poor", "Average", "Healthy"], p=[0.45, 0.35, 0.20])
+    else:
+        return np.random.choice(["Poor", "Average", "Healthy"], p=[0.25, 0.40, 0.35])
+
+# Sleep hours
+def sleep_hours(row):
+    if row["AGE"] >= 65:
+        return round(np.random.normal(6.3, 1), 1)
+    elif row["AGE"] <= 25:
+        return round(np.random.normal(7.5, 1), 1)
+    elif row["smoking_status"] == "Current":
+        return round(np.random.normal(6.0, 1), 1)
+    else:
+        return round(np.random.normal(7.0, 1), 1)
+
+# add snythetic data for each patient 
+merged["alcohol_use"] = merged.apply(alcohol_use, axis=1)
+merged["physical_activity"] = merged.apply(physical_activity, axis=1)
+merged["diet_quality"] = merged.apply(diet_quality, axis=1)
+merged["sleep_hours"] = merged.apply(sleep_hours, axis=1)
 
 # Save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
