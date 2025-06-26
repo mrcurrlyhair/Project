@@ -149,7 +149,27 @@ radon = {
 zipcounty["radon_level"] = zipcounty["county_name"].map(radon)
 
 # Missing zip code
-zipcounty.loc[len(zipcounty)] = ["01866", "Middlesex", 5]
+missingzips = [
+    {"zip": "01866", "county_name": "Middlesex", "radon_level": 5},
+    {"zip": "01086", "county_name": "Hampden",   "radon_level": 3},
+    {"zip": "01199", "county_name": "Hampden",   "radon_level": 3},
+    {"zip": "02861", "county_name": "Bristol",   "radon_level": 3},
+    {"zip": "02554", "county_name": "Dukes",     "radon_level": 3},
+    {"zip": "01059", "county_name": "Hampshire", "radon_level": 3},
+    {"zip": "02768", "county_name": "Plymouth",  "radon_level": 3},
+    {"zip": "02060", "county_name": "Norfolk",   "radon_level": 3},
+    {"zip": "02358", "county_name": "Plymouth",  "radon_level": 3},
+    {"zip": "02574", "county_name": "Barnstable","radon_level": 3},
+    {"zip": "02543", "county_name": "Barnstable","radon_level": 3},
+    {"zip": "02568", "county_name": "Dukes",     "radon_level": 3},
+    {"zip": "02669", "county_name": "Barnstable","radon_level": 3},
+    {"zip": "02651", "county_name": "Barnstable","radon_level": 3},
+    {"zip": "02051", "county_name": "Plymouth",  "radon_level": 3}
+]
+
+for row in missingzips:
+    zipcounty.loc[len(zipcounty)] = [row["zip"], row["county_name"], row["radon_level"]]
+
 
 # Prepare zip codes, need to be 5 digits long 
 merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
@@ -157,8 +177,8 @@ merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
 # Merge  
 merged = merged.merge(zipcounty, left_on="ZIP", right_on="zip", how="left")
 
-# delete extra zip column   
-#merged.drop(columns=["zip"], inplace=True)
+# Delete extra zip column   
+merged.drop(columns=["zip"], inplace=True)
 
 # Save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
