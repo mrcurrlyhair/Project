@@ -167,7 +167,7 @@ missingzips = [
     {"zip": "02051", "county_name": "Plymouth",  "radon_level": 3}
 ]
 
-# Add missing ZIPs using a DataFrame, ensuring ZIPs are string-padded
+# Add missing zips, this method is the only one that consistently worked after some odd issues. :)
 missingzip = pd.DataFrame(missingzips)
 missingzip["zip"] = missingzip["zip"].astype(str).str.zfill(5)
 
