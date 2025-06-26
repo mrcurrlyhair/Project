@@ -177,8 +177,9 @@ merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
 # Merge  
 merged = merged.merge(zipcounty, left_on="ZIP", right_on="zip", how="left")
 
-# Delete extra zip column   
+# Delete extra zip and county column   
 merged.drop(columns=["zip"], inplace=True)
+merged.drop(columns=["county_name"], inplace=True)
 
 # Save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
