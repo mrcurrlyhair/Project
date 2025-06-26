@@ -167,19 +167,33 @@ missingzips = [
     {"zip": "02051", "county_name": "Plymouth",  "radon_level": 3}
 ]
 
-for row in missingzips:
-    zipcounty.loc[len(zipcounty)] = [row["zip"], row["county_name"], row["radon_level"]]
+# Add missing ZIPs using a DataFrame, ensuring ZIPs are string-padded
+missingzip = pd.DataFrame(missingzips)
+missingzip["zip"] = missingzip["zip"].astype(str).str.zfill(5)
 
+# Combine into zipcounty
+zipcounty = pd.concat([zipcounty, missingzip], ignore_index=True)
 
 # Prepare zip codes, need to be 5 digits long 
 merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
+
+# unmatched_zips = merged[merged["county_name"].isna()]["ZIP"].unique()
+# print("Unmatched ZIP codes:", unmatched_zips)
 
 # Merge  
 merged = merged.merge(zipcounty, left_on="ZIP", right_on="zip", how="left")
 
 # Delete extra zip and county column   
 merged.drop(columns=["zip"], inplace=True)
-merged.drop(columns=["county_name"], inplace=True)
+
+# Prepare pollution data
+pollution = pd.read_csv("CSVs/pollution_levels.csv")
+pollution["county_name"] = pollution["County"].str.replace(" County", "", regex=False)
+pollution.rename(columns={"Micrograms per cubic meter (PM2.5)": "pollution"}, inplace=True)
+pollution = pollution[["county_name", "pollution"]]
+
+# Merge pollution data into merged dataset using county_name
+merged = merged.merge(pollution, on="county_name", how="left")
 
 # Save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
