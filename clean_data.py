@@ -1,9 +1,9 @@
 import pandas as pd
 
 # Load the CSV files
-observations = pd.read_csv("observations.csv")
-patients = pd.read_csv("patients.csv")
-conditions = pd.read_csv("conditions.csv")
+observations = pd.read_csv("CSVs/observations.csv")
+patients = pd.read_csv("CSVs/patients.csv")
+conditions = pd.read_csv("CSVs/conditions.csv")
 
 # Filter only the patient health data needed
 diseases = [
@@ -45,7 +45,7 @@ diseases_terms = {
 for col in diseases_terms:
     merged[col] = 0
 
-# Check each condition and update the label if it matches (true or false)
+# Check each condition and update the label if it matches (1 for true or 0 for false)
 for i, row in conditions.iterrows():
     pid = row["PATIENT"]
     desc = str(row["DESCRIPTION"]).lower()
@@ -56,5 +56,5 @@ for i, row in conditions.iterrows():
                 break
 
 # Save the cleaned dataset
-merged.to_csv("cleaned_data.csv", index=False)
-print("Cleaned dataset saved as 'cleaned_data.csv'")
+merged.to_csv("CSVs/cleaned_data.csv", index=False)
+print("Cleaned dataset saved ")
