@@ -142,7 +142,9 @@ radon = {
     "Hampshire": 3,
     "Franklin": 3,
     "Berkshire": 3,
-    "Suffolk": 1
+    "Suffolk": 1,
+    "Dukes": 3,
+    "Nantucket": 3
 }
 
 # Assign radon levels based on county
