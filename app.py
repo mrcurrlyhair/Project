@@ -120,7 +120,7 @@ def delete_account():
         conn_user.close()
 
         session.clear()
-        flash('Your account was deleted successfully.')
+        flash('Your account was deleted successfully')
 
     return redirect(url_for('home'))
 

@@ -3,7 +3,7 @@ import sqlite3
 conn = sqlite3.connect('health.db')
 cursor = conn.cursor()
 
-
+# Create health db 
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS health (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,4 +26,4 @@ cursor.execute('''
 
 conn.commit()
 conn.close()
-print("Health database created.")
+print("Health database created")
