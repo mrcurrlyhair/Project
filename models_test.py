@@ -60,3 +60,49 @@ os.makedirs('saved_models', exist_ok=True)
 with open('saved_models/rf_diabetes_model.pkl', 'wb') as f:
     pickle.dump(rf_model, f)
 print('saved diabetes rf model')
+
+# target variable for heart disease
+y_hd = data['heart_disease']
+
+# drop unneeded columns for heart disease
+X_hd = data.drop(columns=[
+    'PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'hypertension', 'asthma', 'copd', 'lung_cancer', 'BIRTHDATE'
+])
+
+# ohe categorical features
+X_hd = pd.get_dummies(X_hd, drop_first=True)
+
+# split into train and test 
+x_train_hd, x_test_hd, y_train_hd, y_test_hd = train_test_split(X_hd, y_hd, test_size=0.2, random_state=28, stratify=y_hd)
+
+# scale numbers
+x_train_hd[number] = scaler.fit_transform(x_train_hd[number])
+x_test_hd[number] = scaler.transform(x_test_hd[number])
+
+# balance training data using smote
+x_train_hd_bal, y_train_hd_bal = smote.fit_resample(x_train_hd, y_train_hd)
+
+# define and train Random Forest for heart disease
+rf_hd_model = RandomForestClassifier(
+    n_estimators=200,
+    max_depth=6,
+    min_samples_split=20,
+    min_samples_leaf=10,
+    max_features='sqrt',
+    class_weight={0: 1, 1: 1.5},
+    random_state=28
+)
+rf_hd_model.fit(x_train_hd_bal, y_train_hd_bal)
+
+# predict
+rf_hd_prob = rf_hd_model.predict_proba(x_test_hd)[:, 1]
+rf_hd_prediction = (rf_hd_prob >= 0.6).astype(int)
+
+# results
+print('Random Forest for Heart Disease')
+print(classification_report(y_test_hd, rf_hd_prediction), accuracy_score(y_test_hd, rf_hd_prediction))
+
+# save heart disease model
+with open('saved_models/rf_heart_disease_model.pkl', 'wb') as f:
+    pickle.dump(rf_hd_model, f)
+print('saved heart disease rf model')

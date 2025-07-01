@@ -1,14 +1,14 @@
 import pandas as pd
 import numpy as np
 
-# Seed 28, 10000 patients, Massachusetts 
+# Seed 28, 10000 Patients, Massachusetts 
 
-# Load the CSV files
+# load the CSV files
 observations = pd.read_csv("CSVs/observations.csv")
 patients = pd.read_csv("CSVs/patients.csv")
 conditions = pd.read_csv("CSVs/conditions.csv")
 
-# Filter only the patient health data needed
+# filter only the patient health data needed
 diseases = [
     "Body Height", "Body Weight", "Systolic Blood Pressure", "Diastolic Blood Pressure",
     "Tobacco smoking status", "Cholesterol", "HDL Cholesterol", "LDL Cholesterol",
@@ -16,34 +16,34 @@ diseases = [
 ]
 observations = observations[observations["DESCRIPTION"].isin(diseases)]
 
-# Get the latest records for each patients health data
+# get the latest records for each patients health data
 observations["DATE"] = pd.to_datetime(observations["DATE"])
 observations = observations.sort_values("DATE", ascending=False)
 observations = observations.drop_duplicates(subset=["PATIENT", "DESCRIPTION"], keep="first")
 
-# Makes patient health data have their own column 
+# makes each patients health data have their own column 
 observations = observations.pivot(index="PATIENT", columns="DESCRIPTION", values="VALUE").reset_index()
 
-# Patient demographics and calculate age
+# patient demographics and calculate age
 patients_clean = patients[["Id", "BIRTHDATE", "GENDER", "ZIP"]].copy()
 patients_clean.rename(columns={"Id": "PATIENT"}, inplace=True)
 patients_clean["BIRTHDATE"] = pd.to_datetime(patients_clean["BIRTHDATE"])
 patients_clean["AGE"] = (pd.Timestamp("today") - patients_clean["BIRTHDATE"]).dt.days // 365
 
-# Unknown zips use preious zips (postcodes)
+# unknown zips use previous zips (postcodes) this is for specifically patietns with 00000 as their zipcode
 patients_clean["ZIP"] = patients_clean["ZIP"].replace(0, pd.NA)
 patients_clean["ZIP"] = patients_clean["ZIP"].fillna(method="ffill")
 
-# Merge patient data with their observations data
+# merge patient data with their observations data
 merged = pd.merge(patients_clean, observations, on="PATIENT", how="left")
 
-# Calculate BMI using height in cm and weight in kg
+# calculate BMI using height in cm and weight in kg
 merged["Body Height"] = pd.to_numeric(merged["Body Height"], errors="coerce")
 merged["Body Weight"] = pd.to_numeric(merged["Body Weight"], errors="coerce")
 merged["BMI"] = round(merged["Body Weight"] / (merged["Body Height"] / 100) ** 2, 1)
 
 
-# Map tobacco smoking status into simpler categories
+# map tobacco smoking status into simpler categories
 smoking = {
     "Smokes tobacco daily (finding)": "Current",
     "Ex-smoker (finding)": "Former",
@@ -54,7 +54,7 @@ merged["smoking_status"] = merged["Tobacco smoking status"].map(smoking).fillna(
 merged.drop(columns=["Tobacco smoking status"], inplace=True)
 
 
-# Different terms for the same diseases
+# different terms for the same diseases
 diseases_terms = {
     "heart_disease": ["myocardial infarction", "coronary artery disease", "chronic congestive heart failure"],
     "stroke": ["stroke", "ischemic stroke", "cerebrovascular accident"],
@@ -65,11 +65,11 @@ diseases_terms = {
     "diabetes": ["diabetes", "type 2", "diabetes mellitus type 2", "disorder of kidney due to diabetes mellitus"]
 }
 
-# Add empty columns for each disease
+# add empty columns for each disease
 for col in diseases_terms:
     merged[col] = 0
 
-# Check each condition and update the label if it matches (1 for true or 0 for false)
+# check each condition and update the label if it matches (1 for true or 0 for false)
 for i, row in conditions.iterrows():
     pid = row["PATIENT"]
     desc = str(row["DESCRIPTION"]).lower()
@@ -80,7 +80,7 @@ for i, row in conditions.iterrows():
                 break
 
 
-# Alcohol use - None, Light, Moderate, Heavy
+# alcohol use - None, Light, Moderate, Heavy
 def alcohol_use(row):
     if row["AGE"] >= 65:
         probs = [0.40, 0.45, 0.11, 0.04]
@@ -90,14 +90,14 @@ def alcohol_use(row):
         probs = [0.34, 0.46, 0.15, 0.05]
     return np.random.choice(["None", "Light", "Moderate", "Heavy"], p=probs)
 
-# Physical activity 
+# physical activity 
 def physical_activity(row):
     if row["AGE"] >= 65:
         return np.random.choice(["Sedentary", "Moderate", "Active"], p=[0.25, 0.60, 0.15])
     else:
         return np.random.choice(["Sedentary", "Moderate", "Active"], p=[0.25, 0.45, 0.30])
 
-# Diet quality 
+# diet quality 
 def diet_quality(row):
     if row["diabetes"] == 1:
         return np.random.choice(["Poor", "Average", "Healthy"], p=[0.50, 0.35, 0.15])
@@ -106,7 +106,7 @@ def diet_quality(row):
     else:
         return np.random.choice(["Poor", "Average", "Healthy"], p=[0.25, 0.40, 0.35])
 
-# Sleep hours
+# sleep hours
 def sleep_hours(row):
     if row["AGE"] >= 65:
         return round(np.random.normal(6.3, 1), 1)
@@ -123,13 +123,13 @@ merged["physical_activity"] = merged.apply(physical_activity, axis=1)
 merged["diet_quality"] = merged.apply(diet_quality, axis=1)
 merged["sleep_hours"] = merged.apply(sleep_hours, axis=1)
 
-# Load uszips csv 
+# load uszips csv 
 zipcode = pd.read_csv("CSVs/uszips.csv", dtype={"zip": str}, low_memory=False)
 
-# Load only masachusetts zips
+# load only masachusetts zips
 zipcounty = zipcode[zipcode["state_id"] == "MA"][["zip", "county_name"]]
 
-# Define radon level 5 = high / 3 = moderate / 1 = low
+# define radon level 5 = high / 3 = moderate / 1 = low
 radon = {
     "Worcester": 5,
     "Middlesex": 5,
@@ -147,7 +147,7 @@ radon = {
     "Nantucket": 3
 }
 
-# Assign radon levels based on county
+# assign radon levels based on county
 zipcounty["radon_level"] = zipcounty["county_name"].map(radon)
 
 # Missing zip code
@@ -169,23 +169,23 @@ missingzips = [
     {"zip": "02051", "county_name": "Plymouth",  "radon_level": 3}
 ]
 
-# Add missing zips, this method is the only one that consistently worked after some odd issues. :)
+# add missing zips, this method is the only one that consistently worked after some odd issues. :)
 missingzip = pd.DataFrame(missingzips)
 missingzip["zip"] = missingzip["zip"].astype(str).str.zfill(5)
 
-# Combine into zipcounty
+# combine into zipcounty
 zipcounty = pd.concat([zipcounty, missingzip], ignore_index=True)
 
-# Prepare zip codes, need to be 5 digits long 
+# prepare zip codes, need to be 5 digits long 
 merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
 
 # unmatched_zips = merged[merged["county_name"].isna()]["ZIP"].unique()
 # print("Unmatched ZIP codes:", unmatched_zips)
 
-# Merge  
+# merge  
 merged = merged.merge(zipcounty, left_on="ZIP", right_on="zip", how="left")
 
-# Delete extra zip and county column   
+# delete extra zip column
 merged.drop(columns=["zip"], inplace=True)
 
 # Prepare pollution data
@@ -194,9 +194,9 @@ pollution["county_name"] = pollution["County"].str.replace(" County", "", regex=
 pollution.rename(columns={"Micrograms per cubic meter (PM2.5)": "pollution"}, inplace=True)
 pollution = pollution[["county_name", "pollution"]]
 
-# Merge pollution data into merged dataset using county_name
+# merge pollution data into merged dataset using county_name
 merged = merged.merge(pollution, on="county_name", how="left")
 
-# Save the cleaned dataset
+# save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
 print("Cleaned dataset saved ")
