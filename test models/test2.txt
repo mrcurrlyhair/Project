@@ -1,2 +1,0 @@
-for github purposes, test folder for different saved models, to test/compare them 
-final model for inntgration/use on  the webstie will be saved in root/static/model folder
