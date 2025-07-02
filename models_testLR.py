@@ -34,7 +34,7 @@ def train_lr(X, y, name):
     x_train_bal, y_train_bal = smote.fit_resample(x_train, y_train)
 
     grid = GridSearchCV(
-        LogisticRegression(random_state=28, max_iter=5000), 
+        LogisticRegression(random_state=28, max_iter=10000), 
         lr_para, 
         cv=3, 
         scoring='f1',
