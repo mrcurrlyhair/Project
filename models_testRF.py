@@ -59,7 +59,7 @@ def train_rf(X, y, name):
 
 
 # features not included
-drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'hypertension', 'asthma', 'copd', 'lung_cancer', 'BIRTHDATE']
+drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'hypertension', 'asthma', 'copd', 'lung_cancer', 'BIRTHDATE', 'ZIP']
 X_nf = data.drop(columns=drop_cols)
 X_nf = pd.get_dummies(X_nf, drop_first=True)
 
