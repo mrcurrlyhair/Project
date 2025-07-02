@@ -21,8 +21,8 @@ rf_para = {
 # load cleaned dataset
 data = pd.read_csv('CSVs/cleaned_data.csv')
 
-# function to train RF with GridSearchCV
-def train_rf_with_gridsearch(X, y, name):
+# function to train random forrest with hyperperamters
+def train_rf(X, y, name):
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=28, stratify=y)
 
     scaler = StandardScaler()
@@ -60,11 +60,11 @@ drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'h
 X_nf = data.drop(columns=drop_cols)
 X_nf = pd.get_dummies(X_nf, drop_first=True)
 
-# train each model
-train_rf_with_gridsearch(X_nf, data['diabetes'], 'Diabetes')
-train_rf_with_gridsearch(X_nf, data['heart_disease'], 'Heart Disease')
-train_rf_with_gridsearch(X_nf, data['stroke'], 'Stroke')
-train_rf_with_gridsearch(X_nf, data['hypertension'], 'Hypertension')
-train_rf_with_gridsearch(X_nf, data['asthma'], 'Asthma')
-train_rf_with_gridsearch(X_nf, data['copd'], 'COPD')
-train_rf_with_gridsearch(X_nf, data['lung_cancer'], 'Lung Cancer')
+# train each disease model
+train_rf(X_nf, data['diabetes'], 'Diabetes')
+train_rf(X_nf, data['heart_disease'], 'Heart Disease')
+train_rf(X_nf, data['stroke'], 'Stroke')
+train_rf(X_nf, data['hypertension'], 'Hypertension')
+train_rf(X_nf, data['asthma'], 'Asthma')
+train_rf(X_nf, data['copd'], 'COPD')
+train_rf(X_nf, data['lung_cancer'], 'Lung Cancer')
