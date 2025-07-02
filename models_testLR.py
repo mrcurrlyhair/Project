@@ -8,6 +8,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
 from imblearn.over_sampling import SMOTE
 
+# making sure the folder for the models to be saved exists 
+os.makedirs('saved_models', exist_ok=True)
+
 # define parameter grid for logistic regression
 lr_para = { 
     'C': [0.01, 0.1, 1, 10],

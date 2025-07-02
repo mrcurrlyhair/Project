@@ -8,6 +8,9 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from imblearn.over_sampling import SMOTE
 
+# making sure the folder for the models to be saved exists 
+os.makedirs('saved_models', exist_ok=True)
+
 # define parameter grid for random forest
 rf_para = { 
     'n_estimators': [100, 200, 300],
