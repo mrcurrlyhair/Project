@@ -1,0 +1,74 @@
+import pandas as pd
+import numpy as np
+import pickle
+import os
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
+from imblearn.over_sampling import SMOTE
+from xgboost import XGBClassifier
+
+
+# making sure the folder for the models to be saved exists 
+os.makedirs('saved_models', exist_ok=True)
+
+# define parameter grid for XGBoost
+xgb_para = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [3, 5, 7],
+    'learning_rate': [0.01, 0.1, 0.2],
+    'subsample': [0.8, 1.0],
+    'colsample_bytree': [0.8, 1.0]
+}
+
+# load cleaned dataset
+data = pd.read_csv('CSVs/cleaned_data.csv')
+
+# function to train XGBoost with hyperparameters
+def train_xgb(X, y, name):
+    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=28, stratify=y)
+
+    scaler = StandardScaler()
+    number = ['AGE', 'BMI', 'sleep_hours', 'pollution', 'radon_level']
+    x_train[number] = scaler.fit_transform(x_train[number])
+    x_test[number] = scaler.transform(x_test[number])
+
+    smote = SMOTE(random_state=28)
+    x_train_bal, y_train_bal = smote.fit_resample(x_train, y_train)
+
+    grid = GridSearchCV(
+        XGBClassifier(random_state=28),
+        xgb_para,
+        cv=3,
+        scoring='f1',
+        n_jobs=-1,
+        verbose=1
+    )
+    grid.fit(x_train_bal, y_train_bal)
+    best_model = grid.best_estimator_
+
+    prob = best_model.predict_proba(x_test)[:, 1]
+    pred = (prob >= 0.6).astype(int)
+
+    print(f'XGBoost for {name}')
+    print(classification_report(y_test, pred, zero_division=0), accuracy_score(y_test, pred))
+
+
+    with open(f'saved_models/xgb_{name.lower().replace(" ", "_")}_model.pkl', 'wb') as f:
+        pickle.dump(best_model, f)
+    print(f'saved {name} XGBoost model')
+
+
+# features not included
+drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'hypertension', 'asthma', 'copd', 'lung_cancer', 'BIRTHDATE', 'ZIP']
+X_nf = data.drop(columns=drop_cols)
+X_nf = pd.get_dummies(X_nf, drop_first=True)
+
+# train each disease model
+train_xgb(X_nf, data['diabetes'], 'Diabetes')
+train_xgb(X_nf, data['heart_disease'], 'Heart Disease')
+train_xgb(X_nf, data['stroke'], 'Stroke')
+train_xgb(X_nf, data['hypertension'], 'Hypertension')
+train_xgb(X_nf, data['asthma'], 'Asthma')
+train_xgb(X_nf, data['copd'], 'COPD')
+train_xgb(X_nf, data['lung_cancer'], 'Lung Cancer')
