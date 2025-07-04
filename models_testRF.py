@@ -40,9 +40,11 @@ data = pd.read_csv('CSVs/cleaned_data.csv')
 
 # function to train random forrest with hyperperamters
 def train_rf(X, y, name):
+    
+    # split into training and testing 
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=28, stratify=y)
 
-    #scale integer features 
+    # scale integer features 
     scaler = StandardScaler()
     number = ['AGE', 'BMI', 'sleep_hours', 'pollution', 'radon_level']
     x_train[number] = scaler.fit_transform(x_train[number])
