@@ -3,3 +3,6 @@ Random Forest,Diabetes,0.7539556962025317,saved_models/rf_diabetes_model.pkl
 Random Forest,Heart Disease,0.2959641255605381,saved_models/rf_heart_disease_model.pkl
 Random Forest,Stroke,0.0606060606060606,saved_models/rf_stroke_model.pkl
 Random Forest,Hypertension,0.5772960638904735,saved_models/rf_hypertension_model.pkl
+Random Forest,Asthma,0.1269841269841269,saved_models/rf_asthma_model.pkl
+Random Forest,COPD,0.0546448087431694,saved_models/rf_copd_model.pkl
+Random Forest,Lung Cancer,0.06315789473684211,saved_models/rf_lung_cancer_model.pkl
