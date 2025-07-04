@@ -3,6 +3,17 @@ Random Forest,Diabetes,0.7539556962025317,saved_models/rf_diabetes_model.pkl
 Random Forest,Heart Disease,0.2959641255605381,saved_models/rf_heart_disease_model.pkl
 Random Forest,Stroke,0.0606060606060606,saved_models/rf_stroke_model.pkl
 Random Forest,Hypertension,0.5772960638904735,saved_models/rf_hypertension_model.pkl
+Random Forest,Diabetes,0.7539556962025317,saved_models/rf_diabetes_model.pkl
+Random Forest,Heart Disease,0.2959641255605381,saved_models/rf_heart_disease_model.pkl
+Random Forest,Stroke,0.0606060606060606,saved_models/rf_stroke_model.pkl
+Random Forest,Hypertension,0.5772960638904735,saved_models/rf_hypertension_model.pkl
 Random Forest,Asthma,0.1269841269841269,saved_models/rf_asthma_model.pkl
 Random Forest,COPD,0.0546448087431694,saved_models/rf_copd_model.pkl
-Random Forest,Lung Cancer,0.06315789473684211,saved_models/rf_lung_cancer_model.pkl
+Random Forest,Lung Cancer,0.0631578947368421,saved_models/rf_lung_cancer_model.pkl
+Logistic Regression,Diabetes,0.6818791946308724,saved_models/lr_diabetes_model.pkl
+Logistic Regression,Heart Disease,0.2904761904761905,saved_models/lr_heart_disease_model.pkl
+Logistic Regression,Stroke,0.0363636363636363,saved_models/lr_stroke_model.pkl
+Logistic Regression,Hypertension,0.4956997654417513,saved_models/lr_hypertension_model.pkl
+Logistic Regression,Asthma,0.0852713178294573,saved_models/lr_asthma_model.pkl
+Logistic Regression,COPD,0.0925925925925925,saved_models/lr_copd_model.pkl
+Logistic Regression,Lung Cancer,0.10091743119266056,saved_models/lr_lung_cancer_model.pkl
