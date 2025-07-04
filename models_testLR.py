@@ -36,7 +36,7 @@ data = pd.read_csv('CSVs/cleaned_data.csv')
 
 # function to train logistic regression with hyperparameters
 def train_lr(X, y, name):
-    
+
     # split into training and testing 
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=28, stratify=y)
 
@@ -68,16 +68,19 @@ def train_lr(X, y, name):
     prob = best_model.predict_proba(x_test)[:, 1]
     pred = (prob >= 0.6).astype(int)
  
+    # f1 and accuracy 
     report = classification_report(y_test, pred, output_dict=True)
     f1 = report['1']['f1-score']
     print(f'Logistic Regression for {name}')
     print(classification_report(y_test, pred), accuracy_score(y_test, pred))
 
+    # save model
     model = f'saved_models/lr_{name.lower().replace(" ", "_")}_model.pkl'
     with open(model, 'wb') as f:
         pickle.dump(best_model, f)
     print(f'saved {name} lr model')
 
+    # save results 
     f1_results('Logistic Regression', name, f1, model)
 
 # features not included
