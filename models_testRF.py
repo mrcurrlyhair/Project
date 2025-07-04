@@ -42,14 +42,17 @@ data = pd.read_csv('CSVs/cleaned_data.csv')
 def train_rf(X, y, name):
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=28, stratify=y)
 
+    #scale integer features 
     scaler = StandardScaler()
     number = ['AGE', 'BMI', 'sleep_hours', 'pollution', 'radon_level']
     x_train[number] = scaler.fit_transform(x_train[number])
     x_test[number] = scaler.transform(x_test[number])
 
+    # balance training data using smote
     smote = SMOTE(random_state=28)
     x_train_bal, y_train_bal = smote.fit_resample(x_train, y_train)
 
+    # run gridsearch for random forest
     grid = GridSearchCV(
         RandomForestClassifier(random_state=28), 
         rf_para, 
@@ -59,8 +62,11 @@ def train_rf(X, y, name):
         verbose=1
     )
     grid.fit(x_train_bal, y_train_bal)
+
+    # get best parameters for random forest
     best_model = grid.best_estimator_
 
+    # make predictions (probability of disease 1)
     prob = best_model.predict_proba(x_test)[:, 1]
     pred = (prob >= 0.6).astype(int)
     
