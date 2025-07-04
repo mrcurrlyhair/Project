@@ -11,6 +11,20 @@ from imblearn.over_sampling import SMOTE
 # making sure the folder for the models to be saved exists 
 os.makedirs('saved_models', exist_ok=True)
 
+
+# record f1 scores to compare
+results = 'CSVs/results.csv' 
+
+def f1_results(model_type, disease, f1, model_file):
+    entry = {'Model': model_type, 'Disease': disease, 'F1 Score': f1, 'File': model_file}
+    if not os.path.exists(results):
+        df = pd.DataFrame([entry])
+    else:
+        df = pd.read_csv(results)
+        df = pd.concat([df, pd.DataFrame([entry])], ignore_index=True)
+    df.to_csv(results, index=False)
+
+
 # define parameter grid for random forest
 rf_para = { 
     'n_estimators': [100, 200, 300],
@@ -49,13 +63,18 @@ def train_rf(X, y, name):
 
     prob = best_model.predict_proba(x_test)[:, 1]
     pred = (prob >= 0.6).astype(int)
-
+    
+    report = classification_report(y_test, pred, output_dict=True)
+    f1 = report['1']['f1-score']
     print(f'Random Forest for {name}')
     print(classification_report(y_test, pred), accuracy_score(y_test, pred))
 
-    with open(f'saved_models/rf_{name.lower().replace(" ", "_")}_model.pkl', 'wb') as f:
+    model = f'saved_models/rf_{name.lower().replace(" ", "_")}_model.pkl'
+    with open(model, 'wb') as f:
         pickle.dump(best_model, f)
     print(f'saved {name} rf model')
+
+    f1_results('Random Forest', name, f1, model)
 
 
 # features not included
