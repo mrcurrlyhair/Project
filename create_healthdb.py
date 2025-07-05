@@ -17,7 +17,6 @@ cursor.execute('''
         physical_activity TEXT,
         diet_quality TEXT,
         sleep_hours REAL,
-        county_name TEXT,
         radon_level INTEGER,
         pollution REAL,
         FOREIGN KEY (user_id) REFERENCES users(id)
