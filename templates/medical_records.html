@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('information') }}">Information</a></li>
+
+            {% if session.get('user_id') %}
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                <li><a href="{{ url_for('medical_records') }}">Medical Records</a></li>
+                <li><a href="{{ url_for('predictor') }}">Predictor</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="form-container">
+        <h2>Medical Records</h2>
+
+        {% if not edit %}
+            <form method="GET" action="{{ url_for('medical_records') }}">
+                <input type="hidden" name="edit" value="true">
+                <button type="submit">Edit Records</button>
+            </form>
+        {% endif %}
+
+        <form method="POST" {% if not edit %}onsubmit="return false;"{% endif %}>
+            <label>Age:</label>
+            <input type="number" name="age" value="{{ record.age if record else '' }}" {% if not edit %}disabled{% endif %} required>
+
+            <label>Gender:</label>
+            <select name="gender" {% if not edit %}disabled{% endif %} required>
+                <option value="">Select...</option>
+                <option value="male" {% if record and record.gender == 'male' %}selected{% endif %}>Male</option>
+                <option value="female" {% if record and record.gender == 'female' %}selected{% endif %}>Female</option>
+                <option value="other" {% if record and record.gender == 'other' %}selected{% endif %}>Other</option>
+            </select>
+
+            <label>Postcode:</label>
+            <input type="text" name="postcode" value="{{ record.postcode if record else '' }}" {% if not edit %}disabled{% endif %} required>
+
+            <label>Smoking Status:</label>
+            <select name="smoking_status" {% if not edit %}disabled{% endif %} required>
+                <option value="">Select...</option>
+                <option value="Current" {% if record and record.smoking_status == 'Current' %}selected{% endif %}>Current</option>
+                <option value="Former" {% if record and record.smoking_status == 'Former' %}selected{% endif %}>Former</option>
+                <option value="Never" {% if record and record.smoking_status == 'Never' %}selected{% endif %}>Never</option>
+            </select>
+
+            <label>Alcohol Use:</label>
+            <select name="alcohol_use" {% if not edit %}disabled{% endif %} required>
+                <option value="">Select...</option>
+                {% for level in ['None', 'Light', 'Moderate', 'Heavy'] %}
+                    <option value="{{ level }}" {% if record and record.alcohol_use == level %}selected{% endif %}>{{ level }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Physical Activity:</label>
+            <select name="physical_activity" {% if not edit %}disabled{% endif %} required>
+                <option value="">Select...</option>
+                {% for level in ['Sedentary', 'Moderate', 'Active'] %}
+                    <option value="{{ level }}" {% if record and record.physical_activity == level %}selected{% endif %}>{{ level }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Diet Quality:</label>
+            <select name="diet_quality" {% if not edit %}disabled{% endif %} required>
+                <option value="">Select...</option>
+                {% for level in ['Poor', 'Average', 'Healthy'] %}
+                    <option value="{{ level }}" {% if record and record.diet_quality == level %}selected{% endif %}>{{ level }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Sleep Hours:</label>
+            <input type="number" step="0.1" name="sleep_hours" value="{{ record.sleep_hours if record else '' }}" {% if not edit %}disabled{% endif %} required>
+
+            <label>Height (cm):</label>
+            <input type="number" step="0.1" name="height" {% if not edit %}disabled{% endif %} required>
+
+            <label>Weight (kg):</label>
+            <input type="number" step="0.1" name="weight" {% if not edit %}disabled{% endif %} required>
+
+            {% if not edit %}
+                <label>BMI:</label>
+                <input type="text" value="{{ record.BMI if record else '' }}" disabled>
+            {% endif %}
+
+            
+            {% if edit %}
+                <button type="submit">Save Records</button>
+            {% endif %}
+        </form>
+    </div>
+
+</body>
+</html>

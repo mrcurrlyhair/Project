@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 import sqlite3
 import hashlib
 
@@ -124,7 +124,55 @@ def delete_account():
 
     return redirect(url_for('home'))
 
-# predictor page
+# funtion to get current users health record
+def get_health(user_id):
+    conn = healthdb_connection()
+    record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
+    conn.close()
+    return record
+
+# medical records page
+@app.route('/medical_records', methods=['GET', 'POST'])
+def medical_records():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+
+    user_id = session['user_id']
+    conn = healthdb_connection()
+
+    if request.method == 'POST':
+        age = request.form['age']
+        gender = request.form['gender']
+        postcode = request.form['postcode']
+        smoking_status = request.form['smoking_status']
+        alcohol_use = request.form['alcohol_use']
+        physical_activity = request.form['physical_activity']
+        diet_quality = request.form['diet_quality']
+        sleep_hours = request.form['sleep_hours']
+        height = float(request.form['height'])
+        weight = float(request.form['weight'])
+        bmi = round(weight / (height / 100) ** 2, 1)
+
+        # update the user records in health db
+        conn.execute('''
+            UPDATE health SET
+                age = ?, gender = ?, postcode = ?, smoking_status = ?, alcohol_use = ?,
+                physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?
+            WHERE user_id = ?
+        ''', (age, gender, postcode, smoking_status, alcohol_use,
+              physical_activity, diet_quality, sleep_hours, bmi, user_id))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('medical_records'))
+
+    # get current health data
+    record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
+    conn.close()
+    edit = request.args.get('edit') == 'true'
+
+    return render_template('medical_records.html', record=record, edit=edit)
+
 @app.route('/predictor')
 def predictor():
     if 'user_id' not in session:
