@@ -4,6 +4,7 @@
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+<body>
 
 <div class="navbar">
     <ul>
@@ -12,6 +13,7 @@
 
         {% if session.get('user_id') %}
             <li><a href="/account">Account</a></li>
+            <li><a href="/predictor">Predictor</a></li>
             <li><a href="/logout">Logout</a></li>
         {% else %}
             <li><a href="/login">Login</a></li>
@@ -21,21 +23,22 @@
 </div>
 
 
-    <div class="login-form">
-        <h2>Login</h2>
-        {% if error %}
-            <div class="alert">{{ error }}</div>
-        {% endif %}
-        <form method="POST">
-            <label for="username">Username</label>
-            <input type="text" name="username" required>
-            <label for="password">Password</label>
-            <input type="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div class="sub-title">
-            Don't have an account? <a href="/signup">Sign up here</a>
-        </div>
+<div class="login-form">
+    <h2>Login</h2>
+    {% if error %}
+        <div class="alert">{{ error }}</div>
+    {% endif %}
+    <form method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
+    <div class="sub-title">
+        Don't have an account? <a href="/signup">Sign up here</a>
     </div>
+</div>
+
 </body>
 </html>
