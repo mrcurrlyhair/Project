@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('information') }}">Information</a></li>
+            {% if session.get('user_id') %}
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                <li><a href="{{ url_for('predictor') }}">Predictor</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <h1>Predictor</h1>
+    <p>Test</p>
+
+</body>
+</html>
