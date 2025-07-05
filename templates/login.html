@@ -6,39 +6,40 @@
 </head>
 <body>
 
-<div class="navbar">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/information">Information</a></li>
+    <div class="navbar">
+        <ul>
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('information') }}">Information</a></li>
 
-        {% if session.get('user_id') %}
-            <li><a href="/account">Account</a></li>
-            <li><a href="/predictor">Predictor</a></li>
-            <li><a href="/logout">Logout</a></li>
-        {% else %}
-            <li><a href="/login">Login</a></li>
-            <li><a href="/signup">Sign Up</a></li>
-        {% endif %}
-    </ul>
-</div>
-
-
-<div class="login-form">
-    <h2>Login</h2>
-    {% if error %}
-        <div class="alert">{{ error }}</div>
-    {% endif %}
-    <form method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" required>
-        <button type="submit">Login</button>
-    </form>
-    <div class="sub-title">
-        Don't have an account? <a href="/signup">Sign up here</a>
+            {% if session.get('user_id') %}
+                <li><a href="{{ url_for('account') }}">Account</a></li>
+                <li><a href="{{ url_for('medical_records') }}">Medical Records</a></li>
+                <li><a href="{{ url_for('predictor') }}">Predictor</a></li>
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
+            {% endif %}
+        </ul>
     </div>
-</div>
+
+
+    <div class="login-form">
+        <h2>Login</h2>
+        {% if error %}
+            <div class="alert">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" required>
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="sub-title">
+            Don't have an account? <a href="/signup">Sign up here</a>
+        </div>
+    </div>
 
 </body>
 </html>
