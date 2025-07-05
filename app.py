@@ -6,7 +6,7 @@ app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
 
 
-# Hashing function 
+# hashing function 
 def hashing_pass(text):
     text = text.encode('utf-8')
     hash = hashlib.sha256()
@@ -27,17 +27,17 @@ def healthdb_connection():
     return conn
 
 
-# Home/landing page
+# home/landing page
 @app.route('/')
 def home():
     return render_template('home.html')
 
-# Information page
+# information page
 @app.route('/information')
 def information():
     return render_template('information.html')
 
-# Login page
+# login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -58,7 +58,7 @@ def login():
 
     return render_template('login.html', error=error)
 
-# Sign up page
+# sign up page
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     error = None
@@ -67,17 +67,17 @@ def signup():
         password = hashing_pass(request.form['password'])
 
         try:
-            # Insert into users.db
+            # add user to users.db
             conn_user = userdb_connection()
             cursor = conn_user.cursor()
             cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
             conn_user.commit()
 
-            # Get the new user's ID
+            # get user_id
             user_id = cursor.lastrowid
             conn_user.close()
 
-            # Insert into health.db with that user_id
+            # add user to health.db with that user_id
             conn_health = healthdb_connection()
             conn_health.execute('INSERT INTO health (user_id) VALUES (?)', (user_id,))
             conn_health.commit()
@@ -89,7 +89,7 @@ def signup():
 
     return render_template('signup.html', error=error)
 
-# Account view page
+# account view page
 @app.route('/account')
 def account():
     if 'user_id' not in session:
@@ -101,19 +101,19 @@ def logout():
     session.clear()
     return redirect(url_for('home'))
 
-# Delete account for patient 
+# delete account for patient 
 @app.route('/delete_account', methods=['POST'])
 def delete_account():
     if 'user_id' in session:
         user_id = session['user_id']
 
-        # Delete from health.db
+        # delete from health.db
         conn_health = healthdb_connection()
         conn_health.execute('DELETE FROM health WHERE user_id = ?', (user_id,))
         conn_health.commit()
         conn_health.close()
 
-        # Delete from users.db
+        # delete from users.db
         conn_user = userdb_connection()
         conn_user.execute('DELETE FROM users WHERE id = ?', (user_id,))
         conn_user.commit()
@@ -123,6 +123,14 @@ def delete_account():
         flash('Your account was deleted successfully')
 
     return redirect(url_for('home'))
+
+# predictor page
+@app.route('/predictor')
+def predictor():
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    return render_template('predictor.html')
+
 
 
 if __name__ == '__main__':
