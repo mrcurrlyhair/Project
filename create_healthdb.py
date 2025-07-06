@@ -13,6 +13,8 @@ cursor.execute('''
         county_name TEXT,
         smoking_status TEXT,
         BMI REAL,
+        height REAL,
+        weight REAL,
         alcohol_use TEXT,
         physical_activity TEXT,
         diet_quality TEXT,

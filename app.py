@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 import sqlite3
 import hashlib
+import pandas as pd
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
@@ -131,6 +132,10 @@ def get_health(user_id):
     conn.close()
     return record
 
+
+radon_data = pd.read_csv('CSVs/uk_radon.csv')
+radon_lookup = dict(zip(radon_data['county_name'], radon_data['radon_level']))
+
 # medical records page
 @app.route('/medical_records', methods=['GET', 'POST'])
 def medical_records():
@@ -153,14 +158,19 @@ def medical_records():
         weight = float(request.form['weight'])
         bmi = round(weight / (height / 100) ** 2, 1)
 
+        # find radon level 
+        radon_level = radon_lookup.get(county_name, None)
+
         # update the user records in health db
         conn.execute('''
             UPDATE health SET
                 age = ?, gender = ?, county_name = ?, smoking_status = ?, alcohol_use = ?,
-                physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?
+                physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?,
+                height = ?, weight = ?, radon_level = ?
             WHERE user_id = ?
         ''', (age, gender, county_name, smoking_status, alcohol_use,
-              physical_activity, diet_quality, sleep_hours, bmi, user_id))
+              physical_activity, diet_quality, sleep_hours, bmi,
+              height, weight, radon_level, user_id))
         conn.commit()
         conn.close()
 
@@ -172,6 +182,7 @@ def medical_records():
     edit = request.args.get('edit') == 'true'
 
     return render_template('medical_records.html', record=record, edit=edit)
+
 
 @app.route('/predictor')
 def predictor():
