@@ -143,7 +143,7 @@ def medical_records():
     if request.method == 'POST':
         age = request.form['age']
         gender = request.form['gender']
-        postcode = request.form['postcode']
+        county_name = request.form['county_name']
         smoking_status = request.form['smoking_status']
         alcohol_use = request.form['alcohol_use']
         physical_activity = request.form['physical_activity']
@@ -156,10 +156,10 @@ def medical_records():
         # update the user records in health db
         conn.execute('''
             UPDATE health SET
-                age = ?, gender = ?, postcode = ?, smoking_status = ?, alcohol_use = ?,
+                age = ?, gender = ?, county_name = ?, smoking_status = ?, alcohol_use = ?,
                 physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?
             WHERE user_id = ?
-        ''', (age, gender, postcode, smoking_status, alcohol_use,
+        ''', (age, gender, county_name, smoking_status, alcohol_use,
               physical_activity, diet_quality, sleep_hours, bmi, user_id))
         conn.commit()
         conn.close()

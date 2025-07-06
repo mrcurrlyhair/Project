@@ -10,7 +10,7 @@ cursor.execute('''
         user_id INTEGER UNIQUE,
         age INTEGER,
         gender TEXT,
-        postcode TEXT,
+        county_name TEXT,
         smoking_status TEXT,
         BMI REAL,
         alcohol_use TEXT,
