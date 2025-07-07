@@ -89,6 +89,6 @@ for county in county_list:
     output_rows.append((county, value))
 
 # save final output
-final_df = pd.DataFrame(output_rows, columns=["county", "pollution"])
+final_df = pd.DataFrame(output_rows, columns=["county_name", "pollution"])
 final_df.to_csv("CSVs/clean_pollution.csv", index=False)
 print("Cleaned pollution data saved")

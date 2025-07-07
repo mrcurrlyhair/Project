@@ -46,7 +46,7 @@
             </select>
 
             <label>County:</label>
-            <select name="county_name" {% if not edit %}disabled{% endif %} required>
+            <select name="county" {% if not edit %}disabled{% endif %} required>
                 <option value="">Select...</option>
                 {% for county in [
                         'Antrim', 'Armagh', 'Down', 'Fermanagh', 'Londonderry', 'Tyrone',
@@ -68,7 +68,7 @@
                         'Suffolk', 'Surrey', 'Tyne and Wear', 'Warwickshire', 'West Midlands', 'West Sussex', 'West Yorkshire',
                         'Wiltshire', 'Worcestershire'
                     ] %}
-                     <option value="{{ county }}" {% if record and record.county_name == county %}selected{% endif %}>{{ county }}</option>
+                     <option value="{{ county }}" {% if record and record.county == county %}selected{% endif %}>{{ county }}</option>
                 {% endfor %}
             </select>
 
