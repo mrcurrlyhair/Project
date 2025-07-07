@@ -37,12 +37,11 @@
             <label>Age:</label>
             <input type="number" name="age" value="{{ record.age if record else '' }}" {% if not edit %}disabled{% endif %} required>
 
-            <label>Gender:</label>
+            <label>Gender(At birth):</label>
             <select name="gender" {% if not edit %}disabled{% endif %} required>
                 <option value="">Select...</option>
                 <option value="male" {% if record and record.gender == 'male' %}selected{% endif %}>Male</option>
                 <option value="female" {% if record and record.gender == 'female' %}selected{% endif %}>Female</option>
-                <option value="other" {% if record and record.gender == 'other' %}selected{% endif %}>Other</option>
             </select>
 
             <label>County:</label>
