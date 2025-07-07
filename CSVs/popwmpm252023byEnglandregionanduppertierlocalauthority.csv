@@ -1,0 +1,162 @@
+population-weighted annual mean PM2.5 concentration for 2023 (ugm-3),,,,
+The total PM2.5 concentration should be used for health burden calculations,,,,
+Area code,PM2.5 2023 (total),PM2.5 2023 (non-anthropogenic),PM2.5 2023 (anthropogenic),Region
+A,6.0789,0.4379,5.641,North East
+B,6.5681,0.5554,6.0127,North West
+D,6.8497,0.5081,6.3416,Yorkshire and the Humber
+E,7.5444,0.5598,6.9847,East Midlands
+F,6.8516,0.5268,6.3248,West Midlands
+G,7.1853,0.5926,6.5927,East of England
+H,8.2927,0.5841,7.7086,London
+J,6.7385,0.6073,6.1312,South East
+K,5.7263,0.6503,5.076,South West
+11,7.043,0.5621,6.4809,Buckinghamshire
+12,7.1679,0.6009,6.567,Cambridgeshire
+16,4.5586,0.456,4.1026,Cumbria
+17,7.2759,0.5553,6.7206,Derbyshire
+18,5.2342,0.7609,4.4732,Devon
+,5.5595,0.5909,4.9686,Dorset
+21,6.1738,0.7018,5.472,East Sussex
+22,7.0893,0.5992,6.4901,Essex
+23,5.7784,0.4884,5.29,Gloucestershire
+24,6.3656,0.5802,5.7854,Hampshire
+26,7.3562,0.5592,6.797,Hertfordshire
+29,6.8017,0.6415,6.1602,Kent
+30,6.1286,0.5467,5.5819,Lancashire
+31,7.6717,0.5606,7.1111,Leicestershire
+32,7.1021,0.5656,6.5366,Lincolnshire
+33,7.0414,0.6186,6.4228,Norfolk
+34,7.4161,0.5587,6.8574,Northamptonshire
+36,5.5555,0.4677,5.0878,North Yorkshire
+37,7.5555,0.5565,6.999,Nottinghamshire
+38,6.6082,0.5504,6.0577,Oxfordshire
+40,5.513,0.6142,4.8988,Somerset
+41,6.6789,0.5495,6.1294,Staffordshire
+42,7.0181,0.6163,6.4018,Suffolk
+43,7.1288,0.6008,6.5279,Surrey
+44,6.7999,0.5369,6.263,Warwickshire
+45,6.3364,0.6501,5.6863,West Sussex
+47,5.7342,0.4785,5.2558,Worcestershire
+00AA,9.9434,0.5803,9.3631,City of London
+00AB,8.3267,0.5898,7.7369,Barking and Dagenham
+00AC,8.0912,0.5659,7.5253,Barnet
+00AD,7.8229,0.6017,7.2212,Bexley
+00AE,8.3437,0.5708,7.7729,Brent
+00AF,7.5414,0.6092,6.9322,Bromley
+00AG,8.916,0.5754,8.3406,Camden
+00AH,7.7778,0.6066,7.1712,Croydon
+00AJ,8.1727,0.5738,7.5989,Ealing
+00AK,8.0487,0.5682,7.4805,Enfield
+00AL,8.342,0.5957,7.7463,Greenwich
+00AM,8.9882,0.5779,8.4103,Hackney
+00AN,8.5168,0.5805,7.9363,Hammersmith and Fulham
+00AP,8.3967,0.5716,7.8251,Haringey
+00AQ,7.8308,0.5647,7.2661,Harrow
+00AR,7.6647,0.591,7.0738,Havering
+00AS,7.8004,0.5707,7.2297,Hillingdon
+00AT,8.0085,0.5802,7.4283,Hounslow
+00AU,9.0642,0.5765,8.4877,Islington
+00AW,8.8141,0.5799,8.2342,Kensington and Chelsea
+00AX,7.7781,0.5939,7.1842,Kingston upon Thames
+00AY,8.5976,0.59,8.0076,Lambeth
+00AZ,8.3182,0.5952,7.723,Lewisham
+00BA,7.9768,0.5949,7.382,Merton
+00BB,8.8158,0.5862,8.2296,Newham
+00BC,8.3032,0.5827,7.7205,Redbridge
+00BD,7.8299,0.5845,7.2454,Richmond upon Thames
+00BE,8.8961,0.5885,8.3076,Southwark
+00BF,7.6525,0.6033,7.0492,Sutton
+00BG,9.2322,0.5843,8.6479,Tower Hamlets
+00BH,8.4832,0.5765,7.9067,Waltham Forest
+00BJ,8.266,0.5879,7.6782,Wandsworth
+00BK,9.066,0.5786,8.4874,City of Westminster
+00BL,6.908,0.5581,6.35,Bolton
+00BM,7.0794,0.552,6.5274,Bury
+00BN,7.5391,0.5535,6.9856,Manchester
+00BP,7.4555,0.5465,6.909,Oldham
+00BQ,7.1611,0.5457,6.6154,Rochdale
+00BR,7.2804,0.5565,6.7238,Salford
+00BS,7.1102,0.5529,6.5572,Stockport
+00BT,7.4221,0.5486,6.8735,Tameside
+00BU,6.9002,0.558,6.3422,Trafford
+00BW,6.9304,0.5666,6.3638,Wigan
+00BX,6.9229,0.5826,6.3403,Knowsley
+00BY,6.6652,0.5875,6.0776,Liverpool
+00BZ,6.9464,0.5752,6.3713,St Helens
+00CA,6.5789,0.5864,5.9925,Sefton
+00CB,5.7422,0.5957,5.1465,Wirral
+00CC,6.9225,0.5291,6.3935,Barnsley
+00CE,7.1953,0.527,6.6683,Doncaster
+00CF,7.3984,0.5393,6.8591,Rotherham
+00CG,7.2259,0.5425,6.6834,Sheffield
+00CH,6.3767,0.433,5.9436,Gateshead
+00CJ,6.6315,0.4323,6.1992,Newcastle upon Tyne
+00CK,6.6675,0.4328,6.2348,North Tyneside
+00CL,6.7137,0.4339,6.2797,South Tyneside
+00CM,6.4759,0.4399,6.0359,Sunderland
+00CN,7.7343,0.5254,7.2089,Birmingham
+00CQ,7.47,0.5401,6.9299,Coventry
+00CR,6.7765,0.512,6.2645,Dudley
+00CS,7.9327,0.5239,7.4087,Sandwell
+00CT,7.1978,0.5281,6.6696,Solihull
+00CU,7.8516,0.5357,7.3159,Walsall
+00CW,6.965,0.5277,6.4373,Wolverhampton
+00CX,6.9269,0.4956,6.4313,Bradford
+00CY,6.602,0.5174,6.0847,Calderdale
+00CZ,6.9641,0.5238,6.4403,Kirklees
+00DA,7.3116,0.5019,6.8097,Leeds
+00DB,7.0595,0.5155,6.544,Wakefield
+00EB,5.7933,0.444,5.3493,Hartlepool
+00EC,6.5382,0.4445,6.0937,Middlesbrough
+00EE,5.6848,0.4443,5.2405,Redcar and Cleveland
+00EF,6.1762,0.4446,5.7316,Stockton-on-Tees
+00EH,5.8898,0.445,5.4449,Darlington
+00EJ,5.6692,0.4414,5.2279,County Durham
+00EM,5.0916,0.4299,4.6617,Northumberland
+00EQ,6.665,0.5591,6.1059,Cheshire East
+00ET,6.4081,0.577,5.8311,Halton
+00EU,6.5355,0.5691,5.9664,Warrington
+00EW,6.1401,0.5814,5.5587,Cheshire West and Chester
+00EX,6.4294,0.553,5.8765,Blackburn with Darwen
+00EY,6.2781,0.5714,5.7067,Blackpool
+00FA,7.1935,0.4973,6.6961,Kingston upon Hull
+00FB,6.4057,0.4877,5.9179,East Riding of Yorkshire
+00FC,7.2979,0.53,6.7679,North East Lincolnshire
+00FD,6.9702,0.5173,6.4529,North Lincolnshire
+00FF,5.9028,0.4703,5.4325,York
+00FK,7.9424,0.5619,7.3805,Derby
+00FN,8.3288,0.5614,7.7674,Leicester
+00FP,6.9613,0.5679,6.3935,Rutland
+00FY,8.1492,0.5621,7.5871,Nottingham
+00GA,4.7121,0.4399,4.2722,County of Herefordshire
+00GF,5.744,0.5387,5.2053,Telford and Wrekin
+00GG,5.1097,0.557,4.5527,Shropshire
+00GL,7.16,0.5534,6.6066,Stoke-on-Trent
+00HA,5.844,0.5577,5.2863,Bath and North East Somerset
+00HB,6.2939,0.5488,5.7451,Bristol
+00HC,5.4419,0.5669,4.8749,North Somerset
+00HD,6.2819,0.5395,5.7424,South Gloucestershire
+00HE/00HF,5.2581,0.9917,4.2665,Cornwall (with Isle of Scilly)
+00HG,5.7621,0.8856,4.8765,Plymouth
+00HH,5.4115,0.7815,4.63,Torbay
+,6.0393,0.5782,5.4611,"Bournemouth, Christchurch and Poole"
+00HX,6.6858,0.5463,6.1395,Swindon
+00HY,5.9567,0.5575,5.3992,Wiltshire
+00JA,7.4608,0.5897,6.871,Peterborough
+00KA,7.5198,0.5548,6.965,Luton
+00KB,7.1248,0.5613,6.5635,Bedford
+00KC,7.0958,0.561,6.5348,Central Bedfordshire
+00KF,7.2172,0.6145,6.6028,Southend-on-Sea
+00KG,7.8122,0.6076,7.2046,Thurrock
+00LC,7.4511,0.6302,6.8209,Medway
+00MA,7.1029,0.5781,6.5248,Bracknell Forest
+00MB,6.3462,0.5695,5.7767,West Berkshire
+00MC,7.1354,0.5702,6.5653,Reading
+00MD,7.7436,0.5751,7.1685,Slough
+00ME,7.3004,0.5731,6.7273,Windsor and Maidenhead
+00MF,7.0816,0.574,6.5075,Wokingham
+00MG,7.2166,0.5549,6.6617,Milton Keynes
+00ML,6.6494,0.6947,5.9547,Brighton and Hove
+00MR,6.9555,0.5916,6.3639,Portsmouth
+00MS,6.7114,0.5758,6.1356,Southampton
+00MW,5.6565,0.5887,5.0678,Isle of Wight

@@ -2,12 +2,7 @@
 CSVs/conditions.csv
 CSVs/observations.csv
 CSVs/patients.csv
-CSVs/cleaned_data.csv
 health.db
 users.db
 CSVs/uszips.csv
-CSVs/pollution_levels.csv
-CSVs/uk_radon.csv
-CSVs/popwmpm252023byEnglandregionanduppertierlocalauthority.csv
-CSVs/scotland_pm25.csv
-CSVs/wales_pm25.csv
+
