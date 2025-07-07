@@ -199,4 +199,4 @@ merged = merged.merge(pollution, on="county_name", how="left")
 
 # save the cleaned dataset
 merged.to_csv("CSVs/cleaned_data.csv", index=False)
-print("Cleaned dataset saved ")
+print("Cleaned train data saved ")
