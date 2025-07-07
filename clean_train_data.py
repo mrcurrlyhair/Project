@@ -198,5 +198,5 @@ pollution = pollution[["county_name", "pollution"]]
 merged = merged.merge(pollution, on="county_name", how="left")
 
 # save the cleaned dataset
-merged.to_csv("CSVs/cleaned_data.csv", index=False)
+merged.to_csv("CSVs/cleaned_train_data.csv", index=False)
 print("Cleaned train data saved ")
