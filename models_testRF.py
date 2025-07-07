@@ -36,7 +36,7 @@ rf_para = {
 }
 
 # load cleaned dataset
-data = pd.read_csv('CSVs/cleaned_data.csv')
+data = pd.read_csv('CSVs/cleaned_train_data.csv')
 
 # function to train random forrest with hyperperamters
 def train_rf(X, y, name):

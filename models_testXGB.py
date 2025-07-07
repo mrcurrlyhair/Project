@@ -36,7 +36,7 @@ xgb_para = {
 }
 
 # load cleaned dataset
-data = pd.read_csv('CSVs/cleaned_data.csv')
+data = pd.read_csv('CSVs/cleaned_train_data.csv')
 
 # function to train XGBoost with hyperparameters
 def train_xgb(X, y, name):
