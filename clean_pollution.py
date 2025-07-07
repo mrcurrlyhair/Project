@@ -1,15 +1,16 @@
 import pandas as pd
 from difflib import get_close_matches
 
-# load the pollution CSV 
-pollution = pd.read_csv("CSVs/popwmpm252023byEnglandregionanduppertierlocalauthority.csv", skiprows=2)
-pollution.columns = [
-    "Area Name", "PM2.5 Total", "PM2.5 Non-Anthropogenic",
-    "PM2.5 Anthropogenic", "Region"
-]
+# load the england pollution CSV 
+england = pd.read_csv("CSVs/popwmpm252023byEnglandregionanduppertierlocalauthority.csv", skiprows=2)
+england.columns = ["Area Name", "PM2.5 Total", "PM2.5 Non-Anthropogenic", "PM2.5 Anthropogenic", "Region"]
 
-# gets pollution values by region
-pollution = pollution.set_index("Region")["PM2.5 Total"].to_dict()
+# add england data to dictionary 
+pollution_data = england.set_index("Region")["PM2.5 Total"].to_dict()
+
+# add scotland data to dictionary 
+scotland = pd.read_csv("CSVs/scotland_pm25.csv")
+pollution_data.update(scotland.set_index("Region")['PM2.5'].to_dict())
 
 # all 108 counties
 county_list = [
@@ -33,7 +34,7 @@ county_list = [
 ]
 
 # map for counties missed due to city names etc used 
-fallback_city_mapping = {
+county_map = {
     "Bedfordshire": "Central Bedfordshire",
     "Berkshire": "West Berkshire",
     "Bristol": "Bristol, City of",
@@ -59,22 +60,27 @@ fallback_city_mapping = {
     "West Yorkshire": "Leeds",
     "Wiltshire": "Salisbury",
     "Worcestershire": "Worcester",
-    "Cheshire": "Cheshire West and Chester"
+    "Cheshire": "Cheshire West and Chester",
+    "Glasgow (City of Glasgow)": "City of Glasgow",
+    "Dundee City": "City of Dundee",
+    "Edinburgh (City of Edinburgh)": "City of Edinburgh",
+    "Aberdeen City": "City of Aberdeen"
 }
 
 # match counties to pollution data using map or similar names
 output_rows = []
 for county in county_list:
-    value = pollution.get(county, "")
+    value = pollution_data.get(county, "")
     if not value:
-        city = fallback_city_mapping.get(county)
+        city = county_map.get(county)
         if city:
-            value = pollution.get(city)
+            value = pollution_data.get(city)
             if value is None:
-                match = get_close_matches(city, pollution.keys(), n=1, cutoff=0.8)
-                value = pollution.get(match[0]) if match else ""
+                match = get_close_matches(city, pollution_data.keys(), n=1, cutoff=0.8)
+                value = pollution_data.get(match[0]) if match else ""
     output_rows.append((county, value))
 
 # save final output
 final_df = pd.DataFrame(output_rows, columns=["county", "pollution"])
 final_df.to_csv("CSVs/clean_pollution.csv", index=False)
+print("Cleaned pollution data saved ")
