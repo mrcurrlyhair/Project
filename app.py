@@ -132,9 +132,14 @@ def get_health(user_id):
     conn.close()
     return record
 
-
+# radon data
 radon_data = pd.read_csv('CSVs/uk_radon.csv')
 radon_lookup = dict(zip(radon_data['county'], radon_data['radon_level']))
+
+# pollution data
+pollution_data = pd.read_csv('CSVs/clean_pollution.csv')
+pollution_lookup = dict(zip(pollution_data['county'], pollution_data['pollution_level']))
+
 
 # medical records page
 @app.route('/medical_records', methods=['GET', 'POST'])
@@ -161,16 +166,19 @@ def medical_records():
         # find radon level 
         radon_level = radon_lookup.get(county, None)
 
+        # find pollution level
+        pollution_level = pollution_lookup.get(county, None)
+
         # update the user records in health db
         conn.execute('''
             UPDATE health SET
                 age = ?, gender = ?, county = ?, smoking_status = ?, alcohol_use = ?,
                 physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?,
-                height = ?, weight = ?, radon_level = ?
+                height = ?, weight = ?, radon_level = ?, pollution_level = ?
             WHERE user_id = ?
         ''', (age, gender, county, smoking_status, alcohol_use,
               physical_activity, diet_quality, sleep_hours, bmi,
-              height, weight, radon_level, user_id))
+              height, weight, radon_level, pollution_level, user_id))
         conn.commit()
         conn.close()
 
@@ -183,7 +191,7 @@ def medical_records():
 
     return render_template('medical_records.html', record=record, edit=edit)
 
-
+# predictor route 
 @app.route('/predictor')
 def predictor():
     if 'user_id' not in session:

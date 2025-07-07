@@ -122,12 +122,18 @@
                     <label>Radon Level:</label>
                     <input type="text" value="{{ record.radon_level }}" disabled>
                 {% endif %}
+
+                {% if record.pollution_level is not none %}
+                    <label>Pollution Level:</label>
+                    <input type="text" value="{{ record.pollution_level }}" disabled>
+                {% endif %}
             {% endif %}
 
             
             {% if edit %}
                 <button type="submit">Save Records</button>
             {% endif %}
+            
         </form>
     </div>
 
