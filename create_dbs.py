@@ -14,7 +14,7 @@ cursor.execute('''
 
 con.commit()
 con.close()
-print("User database created")
+print("user database created")
 
 
 con = sqlite3.connect('health.db')
@@ -44,4 +44,4 @@ cursor.execute('''
 
 con.commit()
 con.close()
-print("Health database created")
+print("health database created")
