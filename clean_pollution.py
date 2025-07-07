@@ -12,6 +12,10 @@ pollution_data = england.set_index("Region")["PM2.5 Total"].to_dict()
 scotland = pd.read_csv("CSVs/scotland_pm25.csv")
 pollution_data.update(scotland.set_index("Region")['PM2.5'].to_dict())
 
+# add wales data to dictionary (now pre-cleaned)
+wales = pd.read_csv("CSVs/wales_pm25.csv")
+pollution_data.update(wales.set_index("Region")["PM2.5"].to_dict())
+
 # all 108 counties
 county_list = [
     "Bedfordshire", "Berkshire", "Bristol", "Buckinghamshire", "Cambridgeshire", "Cheshire", "City of London",
@@ -83,4 +87,4 @@ for county in county_list:
 # save final output
 final_df = pd.DataFrame(output_rows, columns=["county", "pollution"])
 final_df.to_csv("CSVs/clean_pollution.csv", index=False)
-print("Cleaned pollution data saved ")
+print("Cleaned pollution data saved")
