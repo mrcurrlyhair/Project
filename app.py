@@ -134,7 +134,7 @@ def get_health(user_id):
 
 
 radon_data = pd.read_csv('CSVs/uk_radon.csv')
-radon_lookup = dict(zip(radon_data['county_name'], radon_data['radon_level']))
+radon_lookup = dict(zip(radon_data['county'], radon_data['radon_level']))
 
 # medical records page
 @app.route('/medical_records', methods=['GET', 'POST'])

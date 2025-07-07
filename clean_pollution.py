@@ -12,11 +12,11 @@ pollution_data = england.set_index("Region")["PM2.5 Total"].to_dict()
 scotland = pd.read_csv("CSVs/scotland_pm25.csv")
 pollution_data.update(scotland.set_index("Region")['PM2.5'].to_dict())
 
-# add wales data to dictionary (now pre-cleaned)
+# add wales data to dictionary
 wales = pd.read_csv("CSVs/wales_pm25.csv")
 pollution_data.update(wales.set_index("Region")["PM2.5"].to_dict())
 
-# add northern ireland data to dictionary (now pre-cleaned)
+# add northern ireland data to dictionary 
 northern_ireland = pd.read_csv("CSVs/NI_pm25.csv")
 pollution_data.update(northern_ireland.set_index("Region")["PM2.5"].to_dict())
 
