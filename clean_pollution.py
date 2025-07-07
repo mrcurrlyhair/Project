@@ -16,6 +16,10 @@ pollution_data.update(scotland.set_index("Region")['PM2.5'].to_dict())
 wales = pd.read_csv("CSVs/wales_pm25.csv")
 pollution_data.update(wales.set_index("Region")["PM2.5"].to_dict())
 
+# add northern ireland data to dictionary (now pre-cleaned)
+northern_ireland = pd.read_csv("CSVs/NI_pm25.csv")
+pollution_data.update(northern_ireland.set_index("Region")["PM2.5"].to_dict())
+
 # all 108 counties
 county_list = [
     "Bedfordshire", "Berkshire", "Bristol", "Buckinghamshire", "Cambridgeshire", "Cheshire", "City of London",
