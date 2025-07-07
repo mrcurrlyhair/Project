@@ -1,106 +1,106 @@
-county,pollution
-Bedfordshire,7.0958
-Berkshire,6.3462
-Bristol,6.2939
-Buckinghamshire,7.043
-Cambridgeshire,7.1679
-Cheshire,6.1401
-City of London,9.9434
-Cornwall,5.2581
-Cumbria,4.5586
-Derbyshire,7.2759
-Devon,5.2342
-Dorset,5.5595
-County Durham,5.6692
-East Riding of Yorkshire,6.4057
-East Sussex,6.1738
-Essex,7.0893
-Gloucestershire,5.7784
-Greater London,8.2927
-Greater Manchester,7.5391
-Hampshire,6.3656
-Herefordshire,4.7121
-Hertfordshire,7.3562
-Isle of Wight,5.6565
-Kent,6.8017
-Lancashire,6.1286
-Leicestershire,7.6717
-Lincolnshire,7.1021
-Merseyside,6.6652
-Norfolk,7.0414
-Northamptonshire,7.4161
-Northumberland,5.0916
-North Yorkshire,5.5555
-Nottinghamshire,7.5555
-Oxfordshire,6.6082
-Rutland,6.9613
-Shropshire,5.1097
-Somerset,5.513
-South Yorkshire,7.2259
-Staffordshire,6.6789
-Suffolk,7.0181
-Surrey,7.1288
-Tyne and Wear,6.6315
-Warwickshire,6.7999
-West Midlands,6.8516
-West Sussex,6.3364
-West Yorkshire,7.3116
-Wiltshire,5.9567
-Worcestershire,5.7342
-Aberdeen City,8.16
-Aberdeenshire,6.94
-Angus,7.03
-Argyll and Bute,4.39
-Clackmannanshire,6.89
-Dumfries and Galloway,6.15
-Dundee City,7.86
-East Ayrshire,6.21
+county,pollution_level
+Bedfordshire,7.1
+Berkshire,6.3
+Bristol,6.3
+Buckinghamshire,7.0
+Cambridgeshire,7.2
+Cheshire,6.1
+City of London,9.9
+Cornwall,5.3
+Cumbria,4.6
+Derbyshire,7.3
+Devon,5.2
+Dorset,5.6
+County Durham,5.7
+East Riding of Yorkshire,6.4
+East Sussex,6.2
+Essex,7.1
+Gloucestershire,5.8
+Greater London,8.3
+Greater Manchester,7.5
+Hampshire,6.4
+Herefordshire,4.7
+Hertfordshire,7.4
+Isle of Wight,5.7
+Kent,6.8
+Lancashire,6.1
+Leicestershire,7.7
+Lincolnshire,7.1
+Merseyside,6.7
+Norfolk,7.0
+Northamptonshire,7.4
+Northumberland,5.1
+North Yorkshire,5.6
+Nottinghamshire,7.6
+Oxfordshire,6.6
+Rutland,7.0
+Shropshire,5.1
+Somerset,5.5
+South Yorkshire,7.2
+Staffordshire,6.7
+Suffolk,7.0
+Surrey,7.1
+Tyne and Wear,6.6
+Warwickshire,6.8
+West Midlands,6.9
+West Sussex,6.3
+West Yorkshire,7.3
+Wiltshire,6.0
+Worcestershire,5.7
+Aberdeen City,8.2
+Aberdeenshire,6.9
+Angus,7.0
+Argyll and Bute,4.4
+Clackmannanshire,6.9
+Dumfries and Galloway,6.2
+Dundee City,7.9
+East Ayrshire,6.2
 East Dunbartonshire,6.1
-East Lothian,7.68
-East Renfrewshire,6.44
-Edinburgh (City of Edinburgh),8.45
-Falkirk,7.76
+East Lothian,7.7
+East Renfrewshire,6.4
+Edinburgh (City of Edinburgh),8.4
+Falkirk,7.8
 Fife,7.7
-Glasgow (City of Glasgow),8.25
-Highland,4.67
-Inverclyde,5.66
-Midlothian,7.47
-Moray,5.72
-Na h-Eileanan Siar (Western Isles),4.39
-North Ayrshire,5.61
-North Lanarkshire,7.44
-Orkney Islands,5.62
-Perth and Kinross,5.65
-Renfrewshire,6.43
-Scottish Borders,6.88
-Shetland Islands,6.23
-South Ayrshire,6.02
-South Lanarkshire,6.61
-Stirling,5.42
-West Dunbartonshire,6.13
-West Lothian,7.64
-Blaenau Gwent,7.019231
-Bridgend,6.284917
-Caerphilly,7.983033
-Cardiff,9.357522
-Carmarthenshire,5.516234
-Ceredigion,4.912451
-Conwy,5.418875
-Denbighshire,5.856788
-Flintshire,6.651215
-Gwynedd,4.745987
-Isle of Anglesey,4.579567
-Merthyr Tydfil,7.140674
-Monmouthshire,6.349191
-Neath Port Talbot,6.283583
-Newport,8.358354
-Pembrokeshire,4.760544
-Powys,5.280707
-Rhondda Cynon Taf,7.34246
-Swansea,6.407044
-Torfaen,7.802506
-Vale of Glamorgan,6.806213
-Wrexham,6.492821
+Glasgow (City of Glasgow),8.2
+Highland,4.7
+Inverclyde,5.7
+Midlothian,7.5
+Moray,5.7
+Na h-Eileanan Siar (Western Isles),4.4
+North Ayrshire,5.6
+North Lanarkshire,7.4
+Orkney Islands,5.6
+Perth and Kinross,5.6
+Renfrewshire,6.4
+Scottish Borders,6.9
+Shetland Islands,6.2
+South Ayrshire,6.0
+South Lanarkshire,6.6
+Stirling,5.4
+West Dunbartonshire,6.1
+West Lothian,7.6
+Blaenau Gwent,7.0
+Bridgend,6.3
+Caerphilly,8.0
+Cardiff,9.4
+Carmarthenshire,5.5
+Ceredigion,4.9
+Conwy,5.4
+Denbighshire,5.9
+Flintshire,6.7
+Gwynedd,4.7
+Isle of Anglesey,4.6
+Merthyr Tydfil,7.1
+Monmouthshire,6.3
+Neath Port Talbot,6.3
+Newport,8.4
+Pembrokeshire,4.8
+Powys,5.3
+Rhondda Cynon Taf,7.3
+Swansea,6.4
+Torfaen,7.8
+Vale of Glamorgan,6.8
+Wrexham,6.5
 Antrim,9.4
 Armagh,8.7
 Down,8.9
