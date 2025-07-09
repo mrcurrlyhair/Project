@@ -164,6 +164,10 @@ def medical_records():
         sleep_hours = request.form['sleep_hours']
         height = float(request.form['height'])
         weight = float(request.form['weight'])
+        heart_rate = float(request.form['heart_rate'])
+        respiratory_rate = float(request.form['respiratory_rate'])
+        systolic_bp = float(request.form['systolic_bp'])
+        diastolic_bp = float(request.form['diastolic_bp'])
         bmi = round(weight / (height / 100) ** 2, 1)
 
         # find radon level 
@@ -177,11 +181,15 @@ def medical_records():
             UPDATE health SET
                 age = ?, gender = ?, county = ?, smoking_status = ?, alcohol_use = ?,
                 physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?,
-                height = ?, weight = ?, radon_level = ?, pollution_level = ?
+                height = ?, weight = ?, heart_rate = ?, respiratory_rate = ?,
+                systolic_bp = ?, diastolic_bp = ?, radon_level = ?, pollution_level = ?
             WHERE user_id = ?
-        ''', (age, gender, county, smoking_status, alcohol_use,
-              physical_activity, diet_quality, sleep_hours, bmi,
-              height, weight, radon_level, pollution_level, user_id))
+        ''', (
+            age, gender, county, smoking_status, alcohol_use,
+            physical_activity, diet_quality, sleep_hours, bmi,
+            height, weight, heart_rate, respiratory_rate,
+            systolic_bp, diastolic_bp, radon_level, pollution_level, user_id
+        ))
         conn.commit()
         conn.close()
 
