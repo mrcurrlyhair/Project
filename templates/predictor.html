@@ -23,18 +23,30 @@
         </ul>
     </div>
 
-
     <h1>Your Disease Risk Predictions</h1>
 
-        {% if predictions %}
-            <ul>
-            {% for disease, probability in predictions %}
-                <li>{{ disease }}: {{ probability }}%</li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No medical data, please update your medical records.</p>
-        {% endif %}
+    {% if predictions %}
+        <div class="form-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Disease</th>
+                        <th>Probability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for disease, probability in predictions %}
+                        <tr>
+                            <td>{{ disease }}</td>
+                            <td>{{ probability }}%</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="alert">No medical data, please update your medical records.</p>
+    {% endif %}
 
 </body>
 </html>
