@@ -39,7 +39,7 @@ cursor.execute('''
         heart_rate REAL,
         respiratory_rate REAL,
         systolic_bp REAL,
-        diastolic_bp REAL
+        diastolic_bp REAL,
         radon_level INTEGER,
         pollution_level REAL,
         FOREIGN KEY (user_id) REFERENCES users(id)
