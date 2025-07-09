@@ -195,7 +195,7 @@ def medical_records():
 
         return redirect(url_for('medical_records'))
 
-    # get current health data
+    # get/update health data
     record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
     conn.close()
     edit = request.args.get('edit') == 'true'
