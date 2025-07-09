@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import sqlite3
 import hashlib
 import pandas as pd
+import numpy as np 
+import joblib 
+import os 
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
@@ -191,12 +194,81 @@ def medical_records():
 
     return render_template('medical_records.html', record=record, edit=edit)
 
+# get patient health data 
+def get_health(user_id):
+    conn = healthdb_connection()
+    record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
+    conn.close()
+    return record
+
+# funtion to get disease name from model name (model name can change depedning on results/ when ran )
+def disease_name(filename):
+    return filename.replace('.pkl', '').replace('_', ' ').title()
+
 # predictor route 
 @app.route('/predictor')
 def predictor():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template('predictor.html')
+
+    # get user id from session and corasponding health data for user
+    user_id = session['user_id']
+    conn = healthdb_connection()
+    record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
+    conn.close()
+
+    # no health data error
+    if not record:
+        flash("No health data found. Please fill in your medical records.")
+        return redirect(url_for('medical_records'))
+
+
+    user_health = pd.DataFrame([dict(record)])
+
+    # name change for columns due to training data name different
+    if 'height' in user_health.columns and 'weight' in user_health.columns:
+        user_health['Body Height'] = user_health['height']
+        user_health['Body Weight'] = user_health['weight']
+
+    # remove unneeded columns
+    user_health.drop(columns=['id', 'user_id', 'county', 'height', 'weight'], inplace=True, errors='ignore')
+
+    user_health = pd.get_dummies(user_health, drop_first=True)
+
+    # model location 
+    model_dir = os.path.join('static', 'final_models')
+
+    # due to models being able to be changed in the future due to tweaking, this allows the models to be selected from multiple option of
+    # names. 
+    model_path = next(os.path.join(model_dir, f) for f in os.listdir(model_dir) if f.endswith('.pkl'))
+    model = joblib.load(model_path)
+
+    #expected column names of what the model was trained on
+    expected_cols = model.feature_names_in_
+
+    
+    user_health = user_health.reindex(columns=expected_cols, fill_value=0)
+    X = user_health  
+
+    predictions = []
+    for filename in os.listdir(model_dir):
+        if filename.endswith('.pkl'):
+            model_path = os.path.join(model_dir, filename)
+            model = joblib.load(model_path)
+
+            
+            if hasattr(model, 'predict_proba'):
+                prob = model.predict_proba(X)[0][1]
+            else:
+                prob = model.predict(X)[0]
+
+            name = disease_name(filename)
+            predictions.append((name, round(prob * 100, 1)))
+
+    predictions.sort(key=lambda x: x[1], reverse=True)
+
+    return render_template('predictor.html', predictions=predictions)
+
 
 
 

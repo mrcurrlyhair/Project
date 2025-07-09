@@ -24,8 +24,17 @@
     </div>
 
 
+    <h1>Your Disease Risk Predictions</h1>
 
-        <h1>Predictor</h1>
+        {% if predictions %}
+            <ul>
+            {% for disease, probability in predictions %}
+                <li>{{ disease }}: {{ probability }}%</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No medical data, please update your medical records.</p>
+        {% endif %}
 
 </body>
 </html>
