@@ -46,7 +46,7 @@ def train_xgb(X, y, name):
 
     # scale integer features 
     scaler = StandardScaler()
-    number = ['AGE', 'BMI', 'sleep_hours', 'pollution', 'radon_level']
+    number = ['AGE', 'BMI', 'sleep_hours', 'pollution', 'radon_level', 'Total Cholesterol']
     x_train[number] = scaler.fit_transform(x_train[number])
     x_test[number] = scaler.transform(x_test[number])
 
