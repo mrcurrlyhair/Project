@@ -1,6 +1,6 @@
 from cryptography.fernet import Fernet
 
-with open('secret.key', 'rb') as f:
+with open('encryption.key', 'rb') as f:
     key = f.read()
 
 cipher = Fernet(key)
