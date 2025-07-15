@@ -222,7 +222,7 @@ train_lr(X_nf, data['asthma'], 'Asthma')
 train_lr(X_nf, data['copd'], 'COPD')
 train_lr(X_nf, data['lung_cancer'], 'Lung Cancer')
 
-# train each disease model
+# train rf model for each
 train_rf(X_nf, data['diabetes'], 'Diabetes')
 train_rf(X_nf, data['heart_disease'], 'Heart Disease')
 train_rf(X_nf, data['stroke'], 'Stroke')
@@ -231,7 +231,7 @@ train_rf(X_nf, data['asthma'], 'Asthma')
 train_rf(X_nf, data['copd'], 'COPD')
 train_rf(X_nf, data['lung_cancer'], 'Lung Cancer')
 
-# train each disease model
+# train xgb model for each
 train_xgb(X_nf, data['diabetes'], 'Diabetes')
 train_xgb(X_nf, data['heart_disease'], 'Heart Disease')
 train_xgb(X_nf, data['stroke'], 'Stroke')
