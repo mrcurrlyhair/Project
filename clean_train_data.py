@@ -9,12 +9,17 @@ patients = pd.read_csv("CSVs/patients.csv")
 conditions = pd.read_csv("CSVs/conditions.csv")
 
 # filter only the patient health data needed
-diseases = [
+diseases_cause = [
     "Body Height", "Body Weight", "Systolic Blood Pressure", "Diastolic Blood Pressure",
-    "Tobacco smoking status", "Cholesterol", "HDL Cholesterol", "LDL Cholesterol",
+    "Tobacco smoking status", "Cholesterol [Mass/volume] in Serum or Plasma",
     "Body Mass Index", "Respiratory rate", "Heart rate"
 ]
-observations = observations[observations["DESCRIPTION"].isin(diseases)]
+observations = observations[observations["DESCRIPTION"].isin(diseases_cause)]
+
+# rename cholesterol column to total colesterol
+observations["DESCRIPTION"] = observations["DESCRIPTION"].replace({
+    "Cholesterol [Mass/volume] in Serum or Plasma": "Total Cholesterol"
+})
 
 # get the latest records for each patients health data
 observations["DATE"] = pd.to_datetime(observations["DATE"])
