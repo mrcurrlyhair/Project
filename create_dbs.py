@@ -42,6 +42,7 @@ cursor.execute('''
         diastolic_bp REAL,
         radon_level INTEGER,
         pollution_level REAL,
+        cholesterol REAL,
         FOREIGN KEY (user_id) REFERENCES users(id)
     )
 ''')

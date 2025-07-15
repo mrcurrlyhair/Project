@@ -169,6 +169,7 @@ def medical_records():
         systolic_bp = float(request.form['systolic_bp'])
         diastolic_bp = float(request.form['diastolic_bp'])
         bmi = round(weight / (height / 100) ** 2, 1)
+        cholesterol = float(request.form['cholesterol'])
 
         # find radon level 
         radon_level = radon_lookup.get(county, None)
@@ -182,13 +183,15 @@ def medical_records():
                 age = ?, gender = ?, county = ?, smoking_status = ?, alcohol_use = ?,
                 physical_activity = ?, diet_quality = ?, sleep_hours = ?, BMI = ?,
                 height = ?, weight = ?, heart_rate = ?, respiratory_rate = ?,
-                systolic_bp = ?, diastolic_bp = ?, radon_level = ?, pollution_level = ?
+                systolic_bp = ?, diastolic_bp = ?, radon_level = ?, pollution_level = ?,
+                cholesterol = ?
             WHERE user_id = ?
         ''', (
             age, gender, county, smoking_status, alcohol_use,
             physical_activity, diet_quality, sleep_hours, bmi,
             height, weight, heart_rate, respiratory_rate,
-            systolic_bp, diastolic_bp, radon_level, pollution_level, user_id
+            systolic_bp, diastolic_bp, radon_level, pollution_level,
+            cholesterol, user_id
         ))
         conn.commit()
         conn.close()
