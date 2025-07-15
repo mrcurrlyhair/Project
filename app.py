@@ -240,9 +240,10 @@ def predictor():
     if 'height' in user_health.columns and 'weight' in user_health.columns:
         user_health['Body Height'] = user_health['height']
         user_health['Body Weight'] = user_health['weight']
+        user_health['Total Cholesterol'] = user_health['cholesterol']
 
     # remove unneeded columns
-    user_health.drop(columns=['id', 'user_id', 'county', 'height', 'weight'], inplace=True, errors='ignore')
+    user_health.drop(columns=['id', 'user_id', 'county', 'height', 'weight', 'cholesterol'], inplace=True, errors='ignore')
 
     user_health = pd.get_dummies(user_health, drop_first=True)
 
