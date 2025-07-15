@@ -128,6 +128,13 @@ merged["physical_activity"] = merged.apply(physical_activity, axis=1)
 merged["diet_quality"] = merged.apply(diet_quality, axis=1)
 merged["sleep_hours"] = merged.apply(sleep_hours, axis=1)
 
+# change invalid data to nan to be then added with mean
+merged["Total Cholesterol"] = pd.to_numeric(merged["Total Cholesterol"], errors="coerce")
+
+# add missing total cholesterol with mean
+merged["Total Cholesterol"] = merged["Total Cholesterol"].fillna(round(merged["Total Cholesterol"].mean(), 1))
+
+
 # load uszips csv 
 zipcode = pd.read_csv("CSVs/uszips.csv", dtype={"zip": str}, low_memory=False)
 
