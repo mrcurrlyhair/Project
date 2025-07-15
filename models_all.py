@@ -9,6 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from sklearn.metrics import accuracy_score, classification_report
 from imblearn.over_sampling import SMOTE
+import shutil
 
 
 # making sure the folder for the models to be saved exists 
@@ -239,3 +240,15 @@ train_xgb(X_nf, data['hypertension'], 'Hypertension')
 train_xgb(X_nf, data['asthma'], 'Asthma')
 train_xgb(X_nf, data['copd'], 'COPD')
 train_xgb(X_nf, data['lung_cancer'], 'Lung Cancer')
+
+# load the results
+results = pd.read_csv('CSVs/results.csv')
+
+# go through each disease
+for disease in results['Disease'].unique():
+    results_disease = results[results['Disease'] == disease]
+    best = results_disease.loc[results_disease['F1 Score'].idxmax()]
+
+    shutil.copy(best['File'], 'static/final_models/')
+
+    print(f"model for {disease} ({best['Model']}, F1: {best['F1 Score']:.2f}) copied")
