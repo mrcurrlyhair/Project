@@ -244,7 +244,7 @@ train_xgb(X_nf, data['lung_cancer'], 'Lung Cancer')
 # load the results
 results = pd.read_csv('CSVs/results.csv')
 
-# go through each disease
+# go through each disease and move best model 
 for disease in results['Disease'].unique():
     results_disease = results[results['Disease'] == disease]
     best = results_disease.loc[results_disease['F1 Score'].idxmax()]
