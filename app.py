@@ -165,7 +165,7 @@ def get_health(user_id):
             else:
                 decrypted[key] = value
         return decrypted
-
+    
     return None
 
 
@@ -235,10 +235,11 @@ def medical_records():
 
         return redirect(url_for('medical_records'))
 
-    # view and edit previous medical data
+    
     record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
     conn.close()
 
+    # view and edit previous medical data
     decrypted_record = {}
     for key in record.keys():
         value = record[key]
