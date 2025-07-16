@@ -4,7 +4,8 @@ import hashlib
 import pandas as pd
 import numpy as np 
 import joblib 
-import os 
+import os
+from cryptography.fernet import Fernet
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
@@ -16,6 +17,24 @@ def hashing_pass(text):
     hash = hashlib.sha256()
     hash.update(text)
     return hash.hexdigest()
+
+# load encryption key
+with open('encryption.key', 'rb') as f:
+    encryption_key = f.read()
+
+encrypt = Fernet(encryption_key)
+
+# encryption function
+def encrypt_data(text):
+    if text is None:
+        return None
+    return encrypt.encrypt(str(text).encode()).decode()
+
+# decryption function
+def decrypt_data(token):
+    if token is None:
+        return None
+    return encrypt.decrypt(token.encode()).decode()
 
 
 # SQLite user connection
@@ -133,7 +152,24 @@ def get_health(user_id):
     conn = healthdb_connection()
     record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
     conn.close()
-    return record
+
+    # decrypt data
+    if record:
+        decrypted = {}
+        for key in record.keys():
+            value = record[key]
+            if key in ['age', 'gender', 'county', 'smoking_status', 'alcohol_use', 'physical_activity', 
+                       'diet_quality', 'sleep_hours', 'BMI', 'height', 'weight', 'heart_rate', 'respiratory_rate', 
+                       'systolic_bp', 'diastolic_bp', 'radon_level', 'pollution_level', 'cholesterol']:
+                decrypted[key] = decrypt_data(value)
+            else:
+                decrypted[key] = value
+        return decrypted
+
+    return None
+
+
+    
 
 # radon data
 radon_data = pd.read_csv('CSVs/uk_radon.csv')
@@ -168,16 +204,16 @@ def medical_records():
         respiratory_rate = float(request.form['respiratory_rate'])
         systolic_bp = float(request.form['systolic_bp'])
         diastolic_bp = float(request.form['diastolic_bp'])
-        bmi = round(weight / (height / 100) ** 2, 1)
         cholesterol = float(request.form['cholesterol'])
 
-        # find radon level 
-        radon_level = radon_lookup.get(county, None)
+        # calculate bmi
+        bmi = round(weight / (height / 100) ** 2, 1)
 
-        # find pollution level
+        # get radon and pollution levels
+        radon_level = radon_lookup.get(county, None)
         pollution_level = pollution_lookup.get(county, None)
 
-        # update the user records in health db
+        # save data and encrpyt
         conn.execute('''
             UPDATE health SET
                 age = ?, gender = ?, county = ?, smoking_status = ?, alcohol_use = ?,
@@ -187,30 +223,37 @@ def medical_records():
                 cholesterol = ?
             WHERE user_id = ?
         ''', (
-            age, gender, county, smoking_status, alcohol_use,
-            physical_activity, diet_quality, sleep_hours, bmi,
-            height, weight, heart_rate, respiratory_rate,
-            systolic_bp, diastolic_bp, radon_level, pollution_level,
-            cholesterol, user_id
+            encrypt_data(age), encrypt_data(gender), encrypt_data(county), encrypt_data(smoking_status), encrypt_data(alcohol_use),
+            encrypt_data(physical_activity), encrypt_data(diet_quality), encrypt_data(sleep_hours), encrypt_data(bmi),
+            encrypt_data(height), encrypt_data(weight), encrypt_data(heart_rate), encrypt_data(respiratory_rate),
+            encrypt_data(systolic_bp), encrypt_data(diastolic_bp), encrypt_data(radon_level), encrypt_data(pollution_level),
+            encrypt_data(cholesterol), user_id
         ))
+
         conn.commit()
         conn.close()
 
         return redirect(url_for('medical_records'))
 
-    # get/update health data
+    # view and edit previous medical data
     record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
     conn.close()
+
+    decrypted_record = {}
+    for key in record.keys():
+        value = record[key]
+        if key in ['age', 'gender', 'county', 'smoking_status', 'alcohol_use',
+                   'physical_activity', 'diet_quality', 'sleep_hours', 'BMI',
+                   'height', 'weight', 'heart_rate', 'respiratory_rate',
+                   'systolic_bp', 'diastolic_bp', 'radon_level', 'pollution_level', 'cholesterol']:
+            decrypted_record[key] = decrypt_data(value)
+        else:
+            decrypted_record[key] = value  
+
     edit = request.args.get('edit') == 'true'
 
-    return render_template('medical_records.html', record=record, edit=edit)
+    return render_template('medical_records.html', record=decrypted_record, edit=edit)
 
-# get patient health data 
-def get_health(user_id):
-    conn = healthdb_connection()
-    record = conn.execute('SELECT * FROM health WHERE user_id = ?', (user_id,)).fetchone()
-    conn.close()
-    return record
 
 # funtion to get disease name from model name (model name can change depedning on results/ when ran )
 def disease_name(filename):
@@ -262,6 +305,7 @@ def predictor():
     user_health = user_health.reindex(columns=expected_cols, fill_value=0)
     X = user_health  
 
+    # make predictions using modles saved 
     predictions = []
     for filename in os.listdir(model_dir):
         if filename.endswith('.pkl'):
