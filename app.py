@@ -64,7 +64,6 @@ def information():
 # login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
     if request.method == 'POST':
         username = request.form['username']
         password = hashing_pass(request.form['password'])
@@ -78,9 +77,10 @@ def login():
             session['username'] = user['username']
             return redirect(url_for('account'))
         else:
-            error = 'Invalid username or password'
+            flash("Invalid username or password.")
+            return redirect(url_for('login'))
 
-    return render_template('login.html', error=error)
+    return render_template('login.html')
 
 # sign up page
 @app.route('/signup', methods=['GET', 'POST'])
@@ -307,10 +307,14 @@ def predictor():
                    'systolic_bp', 'diastolic_bp', 'radon_level', 'pollution_level', 'cholesterol']:
             user_health.at[0, key] = decrypt_data(user_health.at[0, key])
 
-    # name change for columns due to training data name different
-    user_health['Body Height'] = float(user_health['height'])
-    user_health['Body Weight'] = float(user_health['weight'])
-    user_health['Total Cholesterol'] = float(user_health['cholesterol'])
+    # name change for columns due to training data name different, also error for when medical data is incomplete
+    try:
+        user_health['Body Height'] = float(user_health['height'])
+        user_health['Body Weight'] = float(user_health['weight'])
+        user_health['Total Cholesterol'] = float(user_health['cholesterol'])
+    except (TypeError, ValueError):
+        flash("Your medical records are incomplete. Please update your health data before using the predictor.")
+        return redirect(url_for('medical_records'))
 
     # remove unneeded columns
     user_health.drop(columns=['id', 'user_id', 'county', 'height', 'weight', 'cholesterol'], inplace=True, errors='ignore')

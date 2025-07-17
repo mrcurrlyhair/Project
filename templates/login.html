@@ -23,12 +23,19 @@
         </ul>
     </div>
 
-
     <div class="login-form">
         <h2>Login</h2>
-        {% if error %}
-            <div class="alert">{{ error }}</div>
-        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        {{ message }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
         <form method="POST">
             <label for="username">Username</label>
             <input type="text" name="username" required>
@@ -36,8 +43,9 @@
             <input type="password" name="password" required>
             <button type="submit">Login</button>
         </form>
+
         <div class="sub-title">
-            Don't have an account? <a href="/signup">Sign up here</a>
+            Don't have an account? <a href="{{ url_for('signup') }}">Sign up here</a>
         </div>
     </div>
 
