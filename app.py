@@ -169,8 +169,6 @@ def get_health(user_id):
     return None
 
 
-    
-
 # radon data
 radon_data = pd.read_csv('CSVs/uk_radon.csv')
 radon_lookup = dict(zip(radon_data['county'], radon_data['radon_level']))
@@ -277,55 +275,81 @@ def predictor():
         flash("No health data found. Please fill in your medical records.")
         return redirect(url_for('medical_records'))
 
-
+    # prepare user data
     user_health = pd.DataFrame([dict(record)])
 
+    # decrypt data
+    for key in user_health.columns:
+        if key in ['age', 'gender', 'county', 'smoking_status', 'alcohol_use',
+                   'physical_activity', 'diet_quality', 'sleep_hours', 'BMI',
+                   'height', 'weight', 'heart_rate', 'respiratory_rate',
+                   'systolic_bp', 'diastolic_bp', 'radon_level', 'pollution_level', 'cholesterol']:
+            user_health.at[0, key] = decrypt_data(user_health.at[0, key])
+
     # name change for columns due to training data name different
-    if 'height' in user_health.columns and 'weight' in user_health.columns:
-        user_health['Body Height'] = user_health['height']
-        user_health['Body Weight'] = user_health['weight']
-        user_health['Total Cholesterol'] = user_health['cholesterol']
+    user_health['Body Height'] = float(user_health['height'])
+    user_health['Body Weight'] = float(user_health['weight'])
+    user_health['Total Cholesterol'] = float(user_health['cholesterol'])
 
     # remove unneeded columns
     user_health.drop(columns=['id', 'user_id', 'county', 'height', 'weight', 'cholesterol'], inplace=True, errors='ignore')
-
     user_health = pd.get_dummies(user_health, drop_first=True)
 
-    # model location 
+    # model location  
     model_dir = os.path.join('static', 'final_models')
 
-    # due to models being able to be changed in the future due to tweaking, this allows the models to be selected from multiple option of
-    # names. 
-    model_path = next(os.path.join(model_dir, f) for f in os.listdir(model_dir) if f.endswith('.pkl'))
-    model = joblib.load(model_path)
-
-    #expected column names of what the model was trained on
-    expected_cols = model.feature_names_in_
-
-    
-    user_health = user_health.reindex(columns=expected_cols, fill_value=0)
-    X = user_health  
-
-    # make predictions using modles saved 
     predictions = []
+
     for filename in os.listdir(model_dir):
         if filename.endswith('.pkl'):
             model_path = os.path.join(model_dir, filename)
             model = joblib.load(model_path)
 
-            
+            expected_cols = model.feature_names_in_
+            user_input = user_health.reindex(columns=expected_cols, fill_value=0)
+
+            X = user_input
+
+            # predict
             if hasattr(model, 'predict_proba'):
                 prob = model.predict_proba(X)[0][1]
+
             else:
                 prob = model.predict(X)[0]
 
-            name = disease_name(filename)
-            predictions.append((name, round(prob * 100, 1)))
+            # risk factor explanation / most important featrue
+            risk_factors = []
 
-    predictions.sort(key=lambda x: x[1], reverse=True)
+            if hasattr(model, 'coef_'):
+                importance = model.coef_[0]
+
+            elif hasattr(model, 'feature_importances_'):
+                importance = model.feature_importances_
+
+
+            top_features = sorted(zip(expected_cols, importance), key=lambda x: abs(x[1]), reverse=True)[:2]
+
+            for feature, imp in top_features:
+                user_value = X.iloc[0][feature]
+                if imp > 0 and user_value > 0:
+                    risk_factors.append(feature.replace('_', ' ').title())
+
+            if risk_factors:
+                reason = "Your risk is increased due to " + " and ".join(risk_factors)
+            else:
+                reason = "No major risk factors detected"
+
+            # result
+            predictions.append({
+                'disease': disease_name(filename),
+                'probability': round(prob * 100, 1),
+                'reason': reason
+            })
+
+    # sort by probability
+    predictions.sort(key=lambda x: x['probability'], reverse=True)
 
     return render_template('predictor.html', predictions=predictions)
-
 
 
 

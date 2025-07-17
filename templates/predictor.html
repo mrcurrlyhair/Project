@@ -32,20 +32,22 @@
                     <tr>
                         <th>Disease</th>
                         <th>Probability</th>
+                        <th>Explanation</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for disease, probability in predictions %}
+                    {% for pred in predictions %}
                         <tr>
-                            <td>{{ disease }}</td>
-                            <td>{{ probability }}%</td>
+                            <td>{{ pred.disease }}</td>
+                            <td>{{ pred.probability }}%</td>
+                            <td>{{ pred.reason }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     {% else %}
-        <p class="alert">No medical data, please update your medical records.</p>
+        <p class="alert">No medical data found. Please update your medical records.</p>
     {% endif %}
 
 </body>
