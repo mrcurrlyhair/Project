@@ -321,13 +321,13 @@ def predictor():
     user_health = pd.get_dummies(user_health, drop_first=True)
 
     # model location  
-    model_dir = os.path.join('static', 'final_models')
+    models = os.path.join('static', 'final_models')
 
     predictions = []
 
-    for filename in os.listdir(model_dir):
+    for filename in os.listdir(models):
         if filename.endswith('.pkl'):
-            model_path = os.path.join(model_dir, filename)
+            model_path = os.path.join(models, filename)
             model = joblib.load(model_path)
 
             expected_cols = model.feature_names_in_
@@ -375,7 +375,6 @@ def predictor():
     predictions.sort(key=lambda x: x['probability'], reverse=True)
 
     return render_template('predictor.html', predictions=predictions)
-
 
 
 if __name__ == '__main__':
