@@ -6,6 +6,7 @@ import numpy as np
 import joblib 
 import os
 from cryptography.fernet import Fernet
+import re
 
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
@@ -84,33 +85,53 @@ def login():
 # sign up page
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    error = None
     if request.method == 'POST':
-        username = request.form['username']
-        password = hashing_pass(request.form['password'])
+        username = request.form['username'][:32]  
+        password = request.form['password'][:32]  
+        confirm_password = request.form['confirm_password'][:32]
 
-        try:
-            # add user to users.db
-            conn_user = userdb_connection()
-            cursor = conn_user.cursor()
-            cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
-            conn_user.commit()
+        # hash password
+        hashed_password = hashing_pass(password)
 
-            # get user_id
-            user_id = cursor.lastrowid
+        # password requirements 
+        password_requirements = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*\-])[A-Za-z\d!@#$%&*\-]{8,}$'
+
+        # does both passwords match 
+        if password != confirm_password:
+            flash("Passwords do not match. Please try again.")
+            return redirect(url_for('signup'))
+
+        # check password strength
+        if not re.match(password_requirements, password):
+            flash("Password must be at least 8 characters, include an uppercase letter, a lowercase letter, a number, and a special character (!@#$%&*-).")
+            return redirect(url_for('signup'))
+
+        # does user already exist?
+        conn_user = userdb_connection()
+        cursor = conn_user.cursor()
+        existing_user = cursor.execute('SELECT * FROM users WHERE username = ?', (username,)).fetchone()
+        if existing_user:
             conn_user.close()
+            flash("Username already exists. Please try again.")
+            return redirect(url_for('signup'))
 
-            # add user to health.db with that user_id
-            conn_health = healthdb_connection()
-            conn_health.execute('INSERT INTO health (user_id) VALUES (?)', (user_id,))
-            conn_health.commit()
-            conn_health.close()
+        # create user in users db
+        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
+        conn_user.commit()
+        user_id = cursor.lastrowid
+        conn_user.close()
 
-            return redirect(url_for('login'))
-        except sqlite3.IntegrityError:
-            error = 'Username already taken'
+        # create user in health db
+        conn_health = healthdb_connection()
+        conn_health.execute('INSERT INTO health (user_id) VALUES (?)', (user_id,))
+        conn_health.commit()
+        conn_health.close()
 
-    return render_template('signup.html', error=error)
+        flash("Account created successfully. Please log in.")
+        return redirect(url_for('login'))
+
+    return render_template('signup.html')
+
 
 # account view page
 @app.route('/account')

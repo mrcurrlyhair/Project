@@ -23,23 +23,36 @@
         </ul>
     </div>
 
+    <div class="signup-form">
+        <h2>Create Account</h2>
 
-<div class="signup-form">
-    <h2>Create Account</h2>
-    {% if error %}
-        <div class="alert">{{ error }}</div>
-    {% endif %}
-    <form method="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" required>
-        <label for="password">Password</label>
-        <input type="password" name="password" required>
-        <button type="submit">Sign Up</button>
-    </form>
-    <div class="sub-title">
-        Already have an account? <a href="/login">Log in here</a>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        {{ message }}<br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <label for="username">Username</label>
+            <input type="text" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" required>
+
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" name="confirm_password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="sub-title">
+            Already have an account? <a href="{{ url_for('login') }}">Log in here</a>
+        </div>
     </div>
-</div>
 
 </body>
 </html>
