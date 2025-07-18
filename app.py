@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import sqlite3
 import hashlib
 import pandas as pd
-import numpy as np 
 import joblib 
 import os
 from cryptography.fernet import Fernet
