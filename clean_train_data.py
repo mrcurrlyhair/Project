@@ -93,7 +93,7 @@ def alcohol_use(row):
         probs = [0.30, 0.50, 0.16, 0.04]
     else:
         probs = [0.34, 0.46, 0.15, 0.05]
-    return np.random.choice(["None", "Light", "Moderate", "Heavy"], p=probs)
+    return np.random.choice(["Sober", "Light", "Moderate", "Heavy"], p=probs)
 
 # physical activity 
 def physical_activity(row):

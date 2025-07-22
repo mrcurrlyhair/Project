@@ -93,7 +93,7 @@
             <label>Alcohol Use:</label>
             <select name="alcohol_use" {% if not edit %}disabled{% endif %} required>
                 <option value="">Select...</option>
-                {% for level in ['None', 'Light', 'Moderate', 'Heavy'] %}
+                {% for level in ['Sober', 'Light', 'Moderate', 'Heavy'] %}
                     <option value="{{ level }}" {% if record and record.alcohol_use == level %}selected{% endif %}>{{ level }}</option>
                 {% endfor %}
             </select>
