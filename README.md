@@ -21,7 +21,7 @@ To train the all models please run
 2) please make sure 7 models have been moved to "/static/final_models" folder
 3) IF NOT PLEASE RUN best_models.py 
 
-To train the models individually please run
+To train the models individually please run (NOTE: running these three at the same time is faster than models_all.py!)
 1) LR_model.py/FR_model.py/XGB_model.py 
 2) best_models.py 
 3) If you would want only one model just run one of three above
