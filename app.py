@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 import sqlite3
 import hashlib
 import pandas as pd
-import joblib 
+import pickle
 import os
 from cryptography.fernet import Fernet
 import re
@@ -327,7 +327,8 @@ def predictor():
     for filename in os.listdir(models):
         if filename.endswith('.pkl'):
             model_path = os.path.join(models, filename)
-            model = joblib.load(model_path)
+            with open(model_path, 'rb') as f:
+                model = pickle.load(f)
 
             expected_cols = model.feature_names_in_
             user_input = user_health.reindex(columns=expected_cols, fill_value=0)

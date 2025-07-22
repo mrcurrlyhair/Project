@@ -1,4 +1,4 @@
-import joblib
+import pickle
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
@@ -10,7 +10,9 @@ models = 'static/final_models/'
 for model_file in os.listdir(models):
     if model_file.endswith('.pkl'):
         model_path = os.path.join(models, model_file)
-        model = joblib.load(model_path)
+        
+        with open(model_path, 'rb') as f:
+            model = pickle.load(f)
 
         features = model.feature_names_in_
 
@@ -38,7 +40,7 @@ for model_file in os.listdir(models):
         plt.figure(figsize=(8, 5))
         plt.barh(df['Feature'][:10], df[label][:10])
         plt.gca().invert_yaxis()
-        plt.title(f'Top 10 Features: {model_file.replace(".pkl", "").replace("_", " ").title()}')
+        plt.title(f"Top 10 Features: {model_file.replace('.pkl', '').replace('_', ' ').title()}")
         plt.xlabel(label)
         plt.ylabel('Feature')
         plt.tight_layout()
