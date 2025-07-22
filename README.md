@@ -27,3 +27,9 @@ To create feature graphs please run
 To start the website please run
 1) app.py 
 2) open http://127.0.0.1:5000 on your browser 
+
+
+------- TESTS -------
+Please run all above first ! 
+Then please run the tests, however for time sake please do not run test_models_all.
+This test will take arround 20 minuates to run as it is retraining the models, this is making sure the output is what i expect.
