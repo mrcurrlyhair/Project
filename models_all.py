@@ -212,7 +212,7 @@ drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'h
 X_nf = data.drop(columns=drop_cols)
 
 # convert categorical data into binary 
-X_nf = pd.get_dummies(X_nf, drop_first=True)
+X_nf = pd.get_dummies(X_nf, drop_first=False)
 
 # train lr model for each 
 train_lr(X_nf, data['diabetes'], 'Diabetes')
