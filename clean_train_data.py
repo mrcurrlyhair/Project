@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 
 # Seed 28, 10000 Patients, Massachusetts 
+np.random.seed(28)
 
 # load the CSV files
 observations = pd.read_csv("CSVs/observations.csv")
