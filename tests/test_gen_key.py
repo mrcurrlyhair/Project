@@ -2,6 +2,8 @@ import pytest
 import os 
 from cryptography.fernet import Fernet
 
+
+
 def test_key_file_exists():
     os.system('python gen_key.py')
     assert os.path.exists('encryption.key')
