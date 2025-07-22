@@ -5,6 +5,8 @@ import sqlite3
 # test if users.db and health.db are created
 def test_db_files_exist():
     os.system('python create_dbs.py')
+
+    # check if db files exists
     assert os.path.exists('users.db'), "users.db not found"
     assert os.path.exists('health.db'), "health.db not found"
 
@@ -39,7 +41,7 @@ def test_health_table():
     conn.close()
 
     assert result is not None, "health table does not exist"
-    
+
     # remove the dbs after test
     os.remove('users.db')
     os.remove('health.db')

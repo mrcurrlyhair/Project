@@ -191,6 +191,7 @@ zipcounty = pd.concat([zipcounty, missingzip], ignore_index=True)
 # prepare zip codes, need to be 5 digits long 
 merged["ZIP"] = merged["ZIP"].astype(str).str.zfill(5)
 
+# code to print missing zips 
 # unmatched_zips = merged[merged["county_name"].isna()]["ZIP"].unique()
 # print("Unmatched ZIP codes:", unmatched_zips)
 
