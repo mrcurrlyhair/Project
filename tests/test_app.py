@@ -1,6 +1,7 @@
 import pytest
 from app import app, hashing_pass
 import os 
+import re 
 
 def test_app_routes():
     app.config['TESTING'] = True
@@ -64,3 +65,31 @@ def test_logout():
 
     response = client.get('/logout', follow_redirects=True)
     assert b"Log In" in response.data or response.status_code == 200
+
+# test hashing of password
+def test_password_hashing():
+    password = 'WinstoN!1'
+    hashed = hashing_pass(password)
+
+    assert hashed != password  # Ensure password is not stored as plain text
+    assert len(hashed) == 64
+
+# test password requirements
+def test_password_requirements():
+    password_regex = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%&*\\-])[A-Za-z\d!@#$%&*\\-]{8,}$'
+
+    # Valid password
+    assert re.match(password_regex, 'WinstoN!1')
+
+    # Too short
+    assert not re.match(password_regex, 'Wins!1')
+
+    # Missing special character
+    assert not re.match(password_regex, 'Winston1')
+
+    # Missing uppercase
+    assert not re.match(password_regex, 'winston!1')
+
+    # Missing digit
+    assert not re.match(password_regex, 'Winston!')
+    
