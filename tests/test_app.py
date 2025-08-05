@@ -92,4 +92,3 @@ def test_password_requirements():
 
     # Missing digit
     assert not re.match(password_regex, 'Winston!')
-    
