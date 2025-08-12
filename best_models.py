@@ -1,6 +1,9 @@
 import pandas as pd
 import shutil
+import os 
 
+# check folders exist
+os.makedirs('results', exist_ok=True)
 
 # load the results
 results = pd.read_csv('results/results.csv')

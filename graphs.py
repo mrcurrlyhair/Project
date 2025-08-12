@@ -16,7 +16,9 @@ results = 'results/results.csv'
 # make sure folders exist
 os.makedirs(graphresults, exist_ok=True)
 os.makedirs(CSVresults, exist_ok=True)
-os.makedirs("graphs", exist_ok=True)
+os.makedirs('results', exist_ok=True)
+os.makedirs('saved_models', exist_ok=True)
+os.makedirs('static/final_models', exist_ok=True)
 
 for model_file in os.listdir(models):
     if model_file.endswith('.pkl'):
@@ -176,6 +178,6 @@ for model in model_types:
     plt.savefig(filename, dpi=300)
     plt.show()
 
-    print(f"Saved graph for {model} to {filename}")
+    print(f"Saved for {model} to {filename}")
 
    
