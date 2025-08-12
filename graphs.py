@@ -3,16 +3,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-from sklearn.metrics import roc_curve, auc
+import seaborn as sns
+from sklearn.metrics import roc_curve, auc, precision_recall_fscore_support
 
 # model and save locations
 models = 'static/final_models/'
 graphresults = 'results/graphs/'
 CSVresults = 'results/CSVs/'
+allmodels = 'saved_models/'
+results = 'results/results.csv'
 
-# make sure directorys exist
+# make sure folders exist
 os.makedirs(graphresults, exist_ok=True)
 os.makedirs(CSVresults, exist_ok=True)
+os.makedirs("graphs", exist_ok=True)
 
 for model_file in os.listdir(models):
     if model_file.endswith('.pkl'):
@@ -72,10 +76,10 @@ drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke',
 X_full = pd.get_dummies(cleaned_data.drop(columns=drop_cols), drop_first=False)
 
 # file name to target column
-def target_from_file(name: str) -> str:
+def target_from_file(name):
     lower = name.lower()
     if 'diabetes' in lower: return 'diabetes'
-    if 'heart' in lower: return 'heart_disease'
+    if 'heart_disease' in lower: return 'heart_disease'
     if 'stroke' in lower: return 'stroke'
     if 'hypertension' in lower: return 'hypertension'
     if 'asthma' in lower: return 'asthma'
@@ -134,3 +138,6 @@ for model_file in os.listdir(models):
     plt.show()
 
     print(f"Saved {roc_img_path}")
+
+
+   
