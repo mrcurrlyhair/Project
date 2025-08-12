@@ -5,3 +5,4 @@ health.db
 users.db
 encryption.key
 CSVs/results.csv
+test.py
