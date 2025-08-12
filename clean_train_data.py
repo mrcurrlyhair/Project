@@ -34,7 +34,7 @@ observations = observations.pivot(index="PATIENT", columns="DESCRIPTION", values
 patients_clean = patients[["Id", "BIRTHDATE", "GENDER", "ZIP"]].copy()
 patients_clean.rename(columns={"Id": "PATIENT"}, inplace=True)
 patients_clean["BIRTHDATE"] = pd.to_datetime(patients_clean["BIRTHDATE"])
-patients_clean["AGE"] = (pd.Timestamp("today") - patients_clean["BIRTHDATE"]).dt.days // 365
+patients_clean["AGE"] = (pd.Timestamp("2025-08-08") - patients_clean["BIRTHDATE"]).dt.days // 365
 
 # unknown zips use previous zips (postcodes) this is for specifically patietns with 00000 as their zipcode
 patients_clean["ZIP"] = patients_clean["ZIP"].replace(0, pd.NA)
