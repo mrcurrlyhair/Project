@@ -12,14 +12,24 @@ from imblearn.over_sampling import SMOTE
 import shutil
 
 
-# making sure the folder for the models to be saved exists 
+# making sure the folders exists 
 os.makedirs('saved_models', exist_ok=True)
+os.makedirs('results', exist_ok=True)
+
 
 # record f1 scores to compare
-results = 'CSVs/results.csv' 
+results = 'results/results.csv' 
 
-def f1_results(model_type, disease, f1, model_file):
-    entry = {'Model': model_type, 'Disease': disease, 'F1 Score': f1, 'File': model_file}
+def save_results(model_type, disease, accuracy, recall, precision, f1, model_file):
+    entry = {
+        'Model': model_type,
+        'Disease': disease,
+        'Accuracy': accuracy,
+        'Recall': recall,
+        'Precision': precision,
+        'F1 Score': f1,
+        'File': model_file
+    }
     if not os.path.exists(results):
         df = pd.DataFrame([entry])
     else:
@@ -104,8 +114,14 @@ def train_lr(X, y, name):
         pickle.dump(best_model, f)
     print(f'saved {name} lr model')
 
+    # metrics
+    accuracy = accuracy_score(y_test, pred)
+    recall = report['1']['recall']
+    precision = report['1']['precision']
+
     # save results 
-    f1_results('Logistic Regression', name, f1, model)
+    save_results('Logistic Regression', name, accuracy, recall, precision, f1, model)
+    
 
 
 # function to train random forrest with hyperperamters
@@ -154,8 +170,13 @@ def train_rf(X, y, name):
         pickle.dump(best_model, f)
     print(f'saved {name} rf model')
 
+    # metrics
+    accuracy = accuracy_score(y_test, pred)
+    recall = report['1']['recall']
+    precision = report['1']['precision']
+
     # save results 
-    f1_results('Random Forest', name, f1, model)
+    save_results('Random Forest', name, accuracy, recall, precision, f1, model)
 
 
 # function to train XGBoost with hyperparameters
@@ -204,8 +225,13 @@ def train_xgb(X, y, name):
         pickle.dump(best_model, f)
     print(f'saved {name} xgb model')
 
+    # metrics
+    accuracy = accuracy_score(y_test, pred)
+    recall = report['1']['recall']
+    precision = report['1']['precision']
+
     # save results 
-    f1_results('XGBoost', name, f1, model)
+    save_results('XGBoost', name, accuracy, recall, precision, f1, model)
 
 # features not included
 drop_cols = ['PATIENT', 'county_name', 'diabetes', 'heart_disease', 'stroke', 'hypertension', 'asthma', 'copd', 'lung_cancer', 'BIRTHDATE', 'ZIP']
@@ -242,7 +268,7 @@ train_xgb(X_nf, data['copd'], 'COPD')
 train_xgb(X_nf, data['lung_cancer'], 'Lung Cancer')
 
 # load the results
-results = pd.read_csv('CSVs/results.csv')
+results = pd.read_csv('results/results.csv')
 
 # go through each disease and move best model 
 for disease in results['Disease'].unique():
