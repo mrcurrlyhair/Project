@@ -6,3 +6,4 @@ users.db
 encryption.key
 CSVs/results.csv
 test.py
+results/results.csv
