@@ -3,7 +3,7 @@ import shutil
 
 
 # load the results
-results = pd.read_csv('CSVs/results.csv')
+results = pd.read_csv('results/results.csv')
 
 # go through each disease
 for disease in results['Disease'].unique():
