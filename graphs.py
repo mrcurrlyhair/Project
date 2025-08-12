@@ -139,5 +139,43 @@ for model_file in os.listdir(models):
 
     print(f"Saved {roc_img_path}")
 
+# open results
+results = pd.read_csv("results/results.csv")
+
+# the models to plot
+model_types = ["Logistic Regression", "Random Forest", "XGBoost"]
+
+# the metrics to plot
+metrics = ["Accuracy", "Recall", "Precision", "F1 Score"]
+
+for model in model_types:
+    # flter for just this model type
+    df_model = results[results["Model"] == model]
+
+    # ensure order of diseases matches your preference
+    diseases = list(df_model["Disease"])
+    
+    # prepare data for grouped bars
+    x = np.arange(len(diseases))  
+    width = 0.2  
+    offsets = np.linspace(-1.5, 1.5, len(metrics)) * width
+
+    # plot the graphs 
+    plt.figure(figsize=(12, 6))
+    for i, metric in enumerate(metrics):
+        plt.bar(x + offsets[i], df_model[metric], width, label=metric)
+    plt.xticks(x, diseases, rotation=45, ha="right")
+    plt.ylim(0, 1) 
+    plt.ylabel("Score")
+    plt.title(f"{model} Performance by Disease")
+    plt.legend()
+    plt.tight_layout()
+
+    # save the graphs
+    filename = f"results/graphs/{model.replace(' ', '_').lower()}_metrics.png"
+    plt.savefig(filename, dpi=300)
+    plt.show()
+
+    print(f"Saved graph for {model} to {filename}")
 
    
