@@ -12,21 +12,20 @@ After doing so, please run in this order to clean data.
 To create the encrytion key please run 
 1) gen_key.py
 
-
 To create the databases please run 
 1) create_dbs.py
 
-To train the all models please run 
+To train the all models please run (best option)
 1) models_all.py
 2) please make sure 7 models have been moved to "/static/final_models" folder
 3) IF NOT, PLEASE RUN best_models.py 
 
-To train the models individually please run (NOTE: running these three at the same time is faster than models_all.py!)
+To train the models individually please run (optional)
 1) LR_model.py/FR_model.py/XGB_model.py 
 2) best_models.py 
 3) If you would want only one model just run one of three above
 
-To create feature graphs please run
+To create graphs of the models performance please run
 1) graphs.py
 
 To start the website please run
