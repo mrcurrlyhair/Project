@@ -1,9 +1,26 @@
 PLEASE UPDATE ME !!!
 
-Download to 3 CSV files, please locate in the "CSV's" folder
+Download to 3 CSV files, please locate in the "CSV's" folder/directory 
 https://drive.google.com/drive/folders/17TLKcEXsFTH8LSM5-rsFEmBEXiBjTsNQ?usp=drive_link
 
-- FOLLOW THIS ORDER -
+The final models are already selected.
+If require just the webapp, please follow this order 
+
+- RUN WITH MODELS SELECTED - 
+
+To create the databases please run 
+1) create_dbs.py
+
+To create the encrytion key please run 
+1) gen_key.py
+
+To start the website please run
+1) app.py 
+2) open http://127.0.0.1:5000 on your browser 
+
+To run all the code from fresh please run in this order.
+
+- TO RUN ALL FOLLOW THIS ORDER -
 
 After doing so, please run in this order to clean data. 
 1) clean_train_data.py
@@ -27,6 +44,7 @@ To train the models individually please run (optional)
 
 To create graphs of the models performance please run
 1) graphs.py
+2) to review graphs please view "/results/graphs"
 
 To start the website please run
 1) app.py 
