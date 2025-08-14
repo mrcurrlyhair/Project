@@ -7,7 +7,7 @@ import seaborn as sns
 from sklearn.metrics import roc_curve, auc, precision_recall_fscore_support
 
 # model and save locations
-models = 'static/final_models/'
+models = 'saved_models/' # changed this later, to get all comparison graphs for all the models for the report, that why there is two saved_models variables
 graphresults = 'results/graphs/'
 CSVresults = 'results/CSVs/'
 allmodels = 'saved_models/'
