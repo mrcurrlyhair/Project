@@ -1,0 +1,28 @@
+Feature,Importance
+AGE,0.19391428
+smoking_status_Former,0.18747553
+diet_quality_Average,0.12309018
+radon_level,0.08321128
+alcohol_use_Light,0.06828262
+diet_quality_Poor,0.062679276
+alcohol_use_Sober,0.061809283
+Diastolic Blood Pressure,0.060886394
+physical_activity_Moderate,0.05642724
+smoking_status_Never,0.037658807
+GENDER_M,0.01784857
+BMI,0.009593144
+pollution,0.0090197725
+Total Cholesterol,0.008607619
+Systolic Blood Pressure,0.0071743377
+Respiratory rate,0.0060646613
+Heart rate,0.0049994364
+Body Weight,0.0012575069
+Body Height,0.0
+sleep_hours,0.0
+alcohol_use_Heavy,0.0
+GENDER_F,0.0
+smoking_status_Current,0.0
+physical_activity_Active,0.0
+alcohol_use_Moderate,0.0
+physical_activity_Sedentary,0.0
+diet_quality_Healthy,0.0

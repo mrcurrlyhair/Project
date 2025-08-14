@@ -1,0 +1,28 @@
+Feature,Importance
+diet_quality_Poor,7.6930429802417315
+diet_quality_Healthy,7.635889210897433
+physical_activity_Moderate,7.627842996791544
+smoking_status_Former,7.626971895874596
+physical_activity_Active,7.575576639688141
+diet_quality_Average,7.528170659458466
+physical_activity_Sedentary,7.383929852569085
+alcohol_use_Light,6.482858833444609
+alcohol_use_Sober,6.139818622897051
+GENDER_F,6.0156547318707725
+smoking_status_Never,5.929822614853931
+alcohol_use_Moderate,5.739086497050804
+GENDER_M,5.726493001867326
+alcohol_use_Heavy,5.068934673316823
+AGE,0.5469228961476457
+BMI,0.48632409430026535
+sleep_hours,0.12334159413799867
+Total Cholesterol,0.12048807580136253
+radon_level,0.10264728435521465
+Body Weight,0.0770195944354359
+Respiratory rate,0.0713056569710682
+Body Height,0.04972149302739266
+Systolic Blood Pressure,0.022512680716649545
+Diastolic Blood Pressure,0.018685059319442428
+Heart rate,0.015384855686995285
+pollution,0.0
+smoking_status_Current,0.0
