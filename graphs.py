@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import numpy as np
 import seaborn as sns
-from sklearn.metrics import roc_curve, auc, precision_recall_fscore_support
+from sklearn.metrics import roc_curve, auc
 
 # model and save locations
 models = 'saved_models/' # changed this later, to get all comparison graphs for all the models for the report, that why there is two saved_models variables
@@ -151,13 +151,13 @@ model_types = ["Logistic Regression", "Random Forest", "XGBoost"]
 metrics = ["Accuracy", "Recall", "Precision", "F1 Score"]
 
 for model in model_types:
-    # flter for just this model type
+    # flter for just a models type
     df_model = results[results["Model"] == model]
 
-    # ensure order of diseases matches your preference
+    # order of disease
     diseases = list(df_model["Disease"])
     
-    # prepare data for grouped bars
+    # prepare data for bar chart
     x = np.arange(len(diseases))  
     width = 0.2  
     offsets = np.linspace(-1.5, 1.5, len(metrics)) * width
