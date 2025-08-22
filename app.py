@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, make_response
 import sqlite3
 import hashlib
 import pandas as pd
@@ -10,6 +10,12 @@ import re
 app = Flask(__name__, static_folder='static')
 app.secret_key = 'Winston1'
 
+@app.after_request
+def add_no_cache_headers(response):
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 # hashing function 
 def hashing_pass(text):
