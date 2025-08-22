@@ -19,6 +19,7 @@ os.makedirs('results', exist_ok=True)
 # record f1 scores to compare
 results = 'results/results.csv' 
 
+# save results function 
 def save_results(model_type, disease, accuracy, recall, precision, f1, model_file):
     entry = {
         'Model': model_type,
